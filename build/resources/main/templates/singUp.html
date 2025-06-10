@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>sing_Up</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ユーザー登録画面</h1>
+    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
+</div>
+<div class="main-contents">
+    <!--  ユーザー登録 -->
+    <label>アカウント<br/>　<input type="text" name="content"/></label><br/>
+    <label>パスワード<br/>　<input type="text" name="content"/></label><br/>
+    <label>パスワード確認<br/>　<input type="text" name="content"/></label><br/>
+    <label>氏名<br/>　<input type="text" name="content"/></label><br/>
+    <label>支社<br/>　<input type="text" name="content"/></label><br/>
+    <label>部署<br/>　<input type="text" name="content"/></label><br/>
+    <form th:action="@{/home}" method="get">
+        <button type="submit">新規投稿</button>
+    </form>
+</div>
+</body>
+</html>

@@ -16,7 +16,6 @@ import java.util.List;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
-    @Autowired
     PasswordEncoder passwordEncoder;
 
     public UserForm findByAccountAndPassword(UserForm userForm){
@@ -24,8 +23,7 @@ public class UserService {
         List<User> results = new ArrayList<>();
         String account = userForm.getAccount();
         String password = createEndocedPwd(userForm.getPassword());
-        //暗号化は後回し
-        results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
+        results.add((User) userRepository.findByAccountAndPassword(account, userForm.getPassword()));
         List<UserForm> users = setUserForm(results);
         return users.get(0);
     }
@@ -38,11 +36,9 @@ public class UserService {
             User result = results.get(i);
             user.setId(result.getId());
             user.setAccount(result.getAccount());
-            user.setName(result.getName());
             user.setPassword(result.getPassword());
             user.setBranchId(result.getBranchId());
             user.setDepartmentId(result.getDepartmentId());
-            user.setStopped(result.isStopped());
             user.setCreatedDate(result.getCreatedDate());
             user.setUpdatedDate(result.getUpdatedDate());
             users.add(user);
@@ -61,6 +57,22 @@ public class UserService {
         }
         return false;
     }
-
-
+    /*
+     * レコード追加
+     */
+    public void saveUser(UserForm reqUser) {
+        User saveUser = setUserEntity(reqUser);
+        userRepository.save(saveUser);
+    }
+    /*
+     * リクエストから取得した情報をEntityに設定
+     */
+    private User setUserEntity(UserForm reqUser) {
+        User report = new User();
+        report.setId(reqUser.getId());
+        return report;
+    }
+    public void deleteUser(Integer id){
+        userRepository.deleteById(id);
+    }
 }
