@@ -16,6 +16,7 @@ import java.util.List;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+    @Autowired
     PasswordEncoder passwordEncoder;
 
     public UserForm findByAccountAndPassword(UserForm userForm){
@@ -23,7 +24,8 @@ public class UserService {
         List<User> results = new ArrayList<>();
         String account = userForm.getAccount();
         String password = createEndocedPwd(userForm.getPassword());
-        results.add((User) userRepository.findByAccountAndPassword(account, userForm.getPassword()));
+        //暗号化は後回し
+        results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
         List<UserForm> users = setUserForm(results);
         return users.get(0);
     }
@@ -36,9 +38,11 @@ public class UserService {
             User result = results.get(i);
             user.setId(result.getId());
             user.setAccount(result.getAccount());
+            user.setName(result.getName());
             user.setPassword(result.getPassword());
             user.setBranchId(result.getBranchId());
             user.setDepartmentId(result.getDepartmentId());
+            user.setStopped(result.isStopped());
             user.setCreatedDate(result.getCreatedDate());
             user.setUpdatedDate(result.getUpdatedDate());
             users.add(user);
@@ -57,4 +61,6 @@ public class UserService {
         }
         return false;
     }
+
+
 }

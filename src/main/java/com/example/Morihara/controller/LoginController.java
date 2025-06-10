@@ -44,12 +44,12 @@ public class LoginController {
         }
 
         // 投稿をテーブルに格納
-        userService.findByAccountAndPassword(userForm);
+        UserForm userInfo = userService.findByAccountAndPassword(userForm);
 
-      if (userForm == null || !userForm.isStoppedId()) {
+      if (userInfo == null || !userInfo.isStopped()) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
-          return new ModelAndView("redirect:/login");
+          return new ModelAndView("redirect:/");
       }
         // rootへリダイレクト
         return new ModelAndView("redirect:/home");

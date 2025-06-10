@@ -34,8 +34,8 @@ public class User {
     @Column(name = "department_id")
     private int  departmentId;
 
-    @Column(name = "stopped_id")
-    private boolean stoppedId;
+    @Column(name = "is_stopped")
+    private boolean isStopped;
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
