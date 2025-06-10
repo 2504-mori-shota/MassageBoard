@@ -42,15 +42,14 @@ public class LoginController {
             mav.addObject("formModel", userForm);
             return mav;
         }
-
         // 投稿をテーブルに格納
         UserForm userInfo = userService.findByAccountAndPassword(userForm);
-
-      if (userInfo == null || !userInfo.isStopped()) {
+        //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
+        if (userInfo == null || !userInfo.isStopped()) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
           return new ModelAndView("redirect:/");
-      }
+        }
         // rootへリダイレクト
         return new ModelAndView("redirect:/home");
     }
