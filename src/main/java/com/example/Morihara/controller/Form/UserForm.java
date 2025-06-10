@@ -27,7 +27,7 @@ public class UserForm {
 
     private int  departmentId;
 
-    private boolean stoppedId;
+    private boolean isStopped;
 
 
     private Date createdDate;
