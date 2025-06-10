@@ -15,9 +15,11 @@
       <form th:action="loading" th:method="post" th:object="${formModel}"><br />
         <label for="account">アカウント</label>
         <input name="account" id="account"/> <br />
+        <div th:if="${#fields.hasErrors('account')}" style="color:red;" th:errors="*{account}"></div>
 
         <label for="password">パスワード</label>
         <input name="password" th:type="password" id="password"/> <br />
+        <div th:if="${#fields.hasErrors('password')}" style="color:red;" th:errors="*{password}"></div>
 
         <input type="submit" value="ログイン" /> <br />
       </form>
