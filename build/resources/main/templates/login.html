@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
 
     <title>ログイン画面</title>
   </head>
@@ -11,7 +12,7 @@
         <strong th:text="${errorMessageForm}"></strong>
       </div>
 
-      <form th:action="login" th:method="post" th:object="${formModel}"><br />
+      <form th:action="loading" th:method="post" th:object="${formModel}"><br />
         <label for="account">アカウント</label>
         <input name="account" id="account"/> <br />
 

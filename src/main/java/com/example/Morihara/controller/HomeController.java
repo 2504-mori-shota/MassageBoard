@@ -27,8 +27,7 @@ public class HomeController {
                            Model model
     ) throws ParseException {
         ModelAndView mav = new ModelAndView();
-        List<UserForm> users = userService.findByUpdatedDateBetweenOrderByUpdatedDateDesc(startDate , endDate);
-        model.addAttribute("users", users);
+        model.addAttribute("users");
         //model.addAttribute("statuses", User.Status.values()); // ステータスプルダウン用
         model.addAttribute("today", LocalDate.now()); // 今日の日付も渡してあげるわよ
         return "home";

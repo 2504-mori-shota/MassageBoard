@@ -32,7 +32,7 @@ public class User {
     private int branchId;
 
     @Column(name = "department_id")
-    private int departmentId;
+    private int  departmentId;
 
     @Column(name = "stopped_id")
     private boolean stoppedId;
