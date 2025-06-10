@@ -57,4 +57,23 @@ public class UserService {
         }
         return false;
     }
+    /*
+     * レコード追加
+     */
+    public void saveUser(UserForm reqUser) {
+        User saveUser = setUserEntity(reqUser);
+        userRepository.save(saveUser);
+    }
+    /*
+     * リクエストから取得した情報をEntityに設定
+     */
+    private User setUserEntity(UserForm reqUser) {
+        User report = new User();
+        report.setId(reqUser.getId());
+        return report;
+    }
+    public void deleteUser(Integer id){
+        userRepository.deleteById(id);
+    }
+
 }

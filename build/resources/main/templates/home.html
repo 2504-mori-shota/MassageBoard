@@ -10,8 +10,11 @@
     <h1>ホーム画面</h1>
     <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
 </div>
-<form th:action="@{/add}" method="get">
+<form th:action="@{/logout}">
     <button type="submit">ログアウト</button>
+</form>
+<form th:action="@{/singUp}">
+    <button type="submit">ユーザー登録画面</button>
 </form>
 
 <div class="main-contents">
@@ -30,6 +33,57 @@
 
         <button type="submit">絞込</button>
     </form>
+</div>
+<div class="message-icon" th:each="content : ${contents}">
+    <div>
+        ID : <span th:text="${content.id}"/>
+    </div>
+    <div class="text">
+        投稿 : <span th:text="${content.content}"/>
+    </div>
+    <div class="action-button">
+        <div class="delete-button">
+            <form th:action="@{/delete/{id}(id=${content.id})}" th:method="delete">
+                <input type="submit" value="削除">
+            </form>
+        </div>
+        <div class="edit-button">
+            <a th:href="@{/edit/{id}(id=${content.id})}">
+                <input type="button" value="編集">
+            </a>
+        </div>
+    </div>
+    <div class="comment-button">
+        <p>匿名コメント</p>
+        <form th:action="@{/comment/add}" method="post" th:object="${formComment}">
+            <!-- コメント投稿のエラーがあり　そのエラーがこのId　ならば　エラーメッセージを表示する               -->
+            <!-- 投稿全てにエラーがひょうじされた。　どのよう投稿に対してエラーが発生しているかわからなくなった。   -->
+            <div th:if="${commentError} and ${errorReportId != null} and ${errorReportId.intValue() == content.id}"
+                 class="error">
+                <p th:text="${errorMessage}"></p>
+            </div>
+            <!--どの投稿に対するコメントかをhiddenで隠れて送ってる。-->
+            <input type="hidden" name="reportId" th:value="${content.id}"/>
+            <input type="text" name="content" placeholder="コメントを書く"/>
+            <button type="submit">送信</button>
+        </form>
+        <div th:each="comment : ${content.comments}">
+            <p th:text="${comment.content}">コメント内容</p>
+            <div>
+                <div class="commentDelete-button">
+                    <form th:action="@{/commentDelete/{id}(id=${comment.id})}" th:method="delete">
+                        <input type="submit" value="削除">
+                    </form>
+                </div>
+
+                <div class="commentEdit-button">
+                    <a th:href="@{/comment/edit/{id}(id=${comment.id})}">
+                        <input type="button" value="編集">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
