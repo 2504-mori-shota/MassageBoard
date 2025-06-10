@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.Morihara.MoriharaApplicationTests" tests="1" skipped="0" failures="0" errors="0" timestamp="2025-06-10T01:41:07.011Z" hostname="BGPN1369" time="0.813">
+  <properties/>
+  <testcase name="contextLoads()" classname="com.example.Morihara.MoriharaApplicationTests" time="0.813"/>
+  <system-out><![CDATA[10:41:01.944 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.example.Morihara.MoriharaApplicationTests]: MoriharaApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+10:41:02.069 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.example.Morihara.MoriharaApplication for test class com.example.Morihara.MoriharaApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::               (v3.3.12)
+
+2025-06-10T10:41:02.536+09:00  INFO 23452 --- [Morihara] [    Test worker] c.e.Morihara.MoriharaApplicationTests    : Starting MoriharaApplicationTests using Java 17.0.15 with PID 23452 (started by trainee1369 in C:\Users\trainee1369\IdeaProjects\Message_Board)
+2025-06-10T10:41:02.536+09:00  INFO 23452 --- [Morihara] [    Test worker] c.e.Morihara.MoriharaApplicationTests    : No active profile set, falling back to 1 default profile: "default"
+2025-06-10T10:41:03.827+09:00  INFO 23452 --- [Morihara] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-06-10T10:41:03.890+09:00  INFO 23452 --- [Morihara] [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 34 ms. Found 0 JPA repository interfaces.
+2025-06-10T10:41:04.422+09:00  INFO 23452 --- [Morihara] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-06-10T10:41:04.642+09:00  INFO 23452 --- [Morihara] [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@7243145f
+2025-06-10T10:41:04.642+09:00  INFO 23452 --- [Morihara] [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-06-10T10:41:04.704+09:00  INFO 23452 --- [Morihara] [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-06-10T10:41:04.799+09:00  INFO 23452 --- [Morihara] [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.3.Final
+2025-06-10T10:41:04.892+09:00  INFO 23452 --- [Morihara] [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-06-10T10:41:05.442+09:00  INFO 23452 --- [Morihara] [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-06-10T10:41:05.517+09:00  WARN 23452 --- [Morihara] [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-06-10T10:41:05.875+09:00  INFO 23452 --- [Morihara] [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-06-10T10:41:05.875+09:00  INFO 23452 --- [Morihara] [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-06-10T10:41:06.079+09:00  WARN 23452 --- [Morihara] [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-06-10T10:41:06.975+09:00  INFO 23452 --- [Morihara] [    Test worker] c.e.Morihara.MoriharaApplicationTests    : Started MoriharaApplicationTests in 4.749 seconds (process running for 5.945)
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
