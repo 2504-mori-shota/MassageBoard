@@ -9,7 +9,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,11 +21,10 @@ public class UserService {
 
     public UserForm findByAccountAndPassword(UserForm userForm){
 
-        List<User> results = new ArrayList<>();
         String account = userForm.getAccount();
         String password = createEndocedPwd(userForm.getPassword());
-        //暗号化は後回し
-        results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
+        //暗号化は後回しAdd commentMore actions
+        List<User> results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
         List<UserForm> users = setUserForm(results);
         return users.get(0);
     }
@@ -75,39 +73,9 @@ public class UserService {
     private User setUserEntity(UserForm reqUser) {
         User report = new User();
         report.setId(reqUser.getId());
-        report.setAccount(reqUser.getAccount());
-        report.setPassword(reqUser.getPassword());
-        report.setName(reqUser.getName());
-        report.setBranchId(reqUser.getBranchId());
-        report.setDepartmentId(reqUser.getBranchId());
         return report;
     }
     public void deleteUser(Integer id){
         userRepository.deleteById(id);
-    }
-
-    /**
-     * ユーザー情報 全検索
-     * @return 検索結果
-     */
-    public List<User> searchAll() {
-        return userRepository.findAll();
-    }
-
-    /**
-     * ユーザー情報 新規登録
-     * user ユーザー情報
-     */
-    public void create(UserForm userForm) {
-        Date now = new Date();
-        User user = new User();
-        user.setId(userForm.getId());
-        user.setAccount(userForm.getAccount());
-        user.setPassword(userForm.getPassword());
-        user.setName(userForm.getName());
-        user.setBranchId(userForm.getBranchId());
-        user.setCreatedDate(userForm.getCreatedDate());
-        user.setUpdatedDate(userForm.getUpdatedDate());
-        userRepository.save(user);
     }
 }
