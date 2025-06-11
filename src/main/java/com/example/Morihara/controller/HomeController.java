@@ -45,37 +45,7 @@ public class HomeController {
     public String login() {
         return "login";
     }
-    /*
-     * 新規投稿画面表示
-     */
-    @GetMapping("/singUp")
-    public ModelAndView newContent() {
-        ModelAndView mav = new ModelAndView();
-        // form用の空のentityを準備
-        UserForm userForm = new UserForm();
-        // 画面遷移先を指定
-        mav.setViewName("/singUp");
-        // 準備した空のFormを保管
-        mav.addObject("formModel", userForm);
-        return mav;
-    }
-    /*
-     * 新規投稿処理
-     * フォームからデータが送られていたら、バリエーションでエラーがあれば入力画面に戻す。
-     * なければデータを保存してトップページにリダイレクトする流れ。
-     */
-    @PostMapping("/add")
-    public ModelAndView addContent(@ModelAttribute("formModel") @Valid UserForm userForm, BindingResult result) {
-        ModelAndView mav = new ModelAndView();
-        if (result.hasErrors()) {
-            mav.setViewName("/singUp");
-            return mav;
-        }
-        // 投稿をテーブルに格納
-        userService.saveUser(userForm);
-        // rootへリダイレクト
-        return new ModelAndView("redirect:/");
-    }
+
 
     @GetMapping("/message/delete/{id}")
     public String deleteTask(@PathVariable("id") Long id) {
