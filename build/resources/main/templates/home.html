@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>ホーム画面</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ホーム画面</h1>
+    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
+</div>
+<form th:action="@{/logout}">
+    <button type="submit">ログアウト</button>
+</form>
+<form th:action="@{/singUp}">
+    <button type="submit">ユーザー登録画面</button>
+</form>
+
+<div class="main-contents">
+    <!--  新規タスク -->
+    <form th:action="@{/message}" th:method="get" th:object="${user}">
+        <button type="submit">新規投稿</button>
+    </form>
+
+    <!-- 検索フォーム -->
+    <form th:action="@{/}" method="get">
+        <label>絞り込み <input type="date" name="startDate"/></label>
+        ～
+        <label><input type="date" name="endDate"/></label>
+
+        <label>カテゴリー　<input type="text" name="content"/></label>
+
+        <button type="submit">絞込</button>
+    </form>
+</div>
+<table>
+    <tr>
+        <th>投稿内容</th>
+
+
+    <tr th:each="messageInfo : ${messages}" >
+
+        <td>
+            <pre class="wrap-text" th:text="*{content}">内容</pre>
+        </td>
+
+    </tr>
+</table>
+</body>
+</html>

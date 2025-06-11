@@ -1,0 +1,81 @@
+body {
+	background-color: #87ceeb;
+}
+
+.header-contents {
+	margin-left: 20px;
+}
+
+.main-contents {
+	margin: 20px;
+	padding: 10px 10px 5px 10px;
+	background-color:	#b0e0e6;
+	height: 100%;
+	width: 80%;
+}
+
+.footer-contents {
+	margin-left: 20px;
+}
+
+.wrap-text{
+    white-space: pre-wrap;
+    overflow-wrap: break-word
+}
+
+.delete-button input[type="submit"] {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-button input[type="submit"]:hover {
+  background-color: #333;
+}
+
+.edit-button input[type="button"] {
+  background-color: #4ec6e0;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.edit-button input[type="button"]:hover {
+  background-color: #34b0ca;
+}
+.action-button2{
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.commentDelete-button input[type="submit"] {
+  background-color: #555;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.commentDelete-button input[type="submit"]:hover {
+  background-color: #333;
+}
+
+.commentEdit-button input[type="button"] {
+  background-color: #4ec6e0;
+  color: white;
+  border: none;
+  padding: 0.4rem 0.8rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.commentEdit-button input[type="button"]:hover {
+  background-color: #34b0ca;
+}
