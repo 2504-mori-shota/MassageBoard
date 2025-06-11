@@ -21,6 +21,7 @@ public class UserForm {
     @Pattern(regexp = "^[^　]*$", message = "パスワードを入力してください")
     private String password;
 
+    @NotBlank(message = "名前を入力してください")
     private String name;
 
     private int branchId;

@@ -3,6 +3,7 @@ package com.example.Morihara.controller;
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,11 +45,14 @@ public class HomeController {
         return "home";
     }
 
-    @GetMapping("/logout")
-    public String login() {
-        return "login";
-    }
-
+   @RequestMapping("/logout")
+   public String logout(HttpServletRequest request) {
+       HttpSession session = request.getSession(false); // セッションを取得
+       if (session != null) {
+           session.invalidate(); // セッションを破棄
+       }
+       return "redirect:/"; // ログアウト成功後のリダイレクト
+   }
 
     @GetMapping("/message/delete/{id}")
     public String deleteTask(@PathVariable("id") Long id) {

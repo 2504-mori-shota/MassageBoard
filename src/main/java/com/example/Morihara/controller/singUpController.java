@@ -42,12 +42,21 @@ public class singUpController {
     @PostMapping("/insert")
 
     public ModelAndView addContent(
-            @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result) {
-        ModelAndView mav = new ModelAndView();
+            @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model
+    ) throws ParseException {
         if (result.hasErrors()) {
-            mav.setViewName("/singUp");
+            ModelAndView mav = new ModelAndView("/singUp");
+            mav.addObject("formModel", userForm);
             return mav;
         }
+        // ユーザー名の重複をチェック
+//        if (userService.isUsernameTaken(userForm.getName())) {
+//            ModelAndView mav = new ModelAndView("/singUp");
+//            result.rejectValue("account", "account", "ユーザー名が既に使用されています");
+//            return mav; // エラーパラメータを追加
+//        }
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト
