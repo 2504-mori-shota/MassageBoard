@@ -8,18 +8,38 @@
 <body>
 <div class="header-contents">
     <h1>ユーザー登録画面</h1>
-    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
 </div>
+
+<div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
+    <strong th:text="${errorMessageForm}"></strong>
+</div>
+
 <div class="main-contents">
-    <!--  ユーザー登録 -->
-    <label>アカウント<br/>　<input type="text" name="content"/></label><br/>
-    <label>パスワード<br/>　<input type="text" name="content"/></label><br/>
-    <label>パスワード確認<br/>　<input type="text" name="content"/></label><br/>
-    <label>氏名<br/>　<input type="text" name="content"/></label><br/>
-    <label>支社<br/>　<input type="text" name="content"/></label><br/>
-    <label>部署<br/>　<input type="text" name="content"/></label><br/>
-    <form th:action="@{/home}" method="get">
-        <button type="submit">新規投稿</button>
+    <!-- actionのURLがPOSTMappingと違うと上手くいかない -->
+    <form th:action="@{/insert}" th:object="${formModel}" th:method="post">
+        <!--  ユーザー登録 -->
+        <label>アカウント<br/>
+            <input type="text" th:field="*{account}" class="form-control"></label><br/>
+
+        <label>パスワード<br/>
+            <input type="text" th:field="*{password}" class="form-control"></label><br/>
+
+        <label>パスワード確認<br/>
+            <input type="text" th:field="*{password}" class="form-control"></label><br/>
+
+        <label>氏名<br/>
+            <input type="text" th:field="*{name}" class="form-control"></label><br/>
+
+        <label>支社<br/>
+            <input type="text" th:field="*{branchId}" class="form-control"></label><br/>
+
+        <label>部署<br/>
+            <input type="text" th:field="*{departmentId}" class="form-control"></label><br/>
+
+        <form th:action="@{/home}">
+            <button type="submit">新規投稿</button>
+            <input type="submit" value="戻る"/>
+        </form>
     </form>
 </div>
 </body>
