@@ -35,10 +35,13 @@ public class User {
     private int  departmentId;
 
     @Column(name = "is_stopped")
-    private boolean isStopped;
+    private int isStopped;
 
     @Column(insertable = false, updatable = false)
     private Date createdDate;
     @Column(insertable = false)
     private Date updatedDate;
+    public enum Status {
+        有効, 停止中
+    }
 }
