@@ -2,6 +2,7 @@ package com.example.Morihara.controller;
 
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.service.UserService;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class LoginController {
     @Autowired
     UserService userService;
+    @Autowired
+    HttpSession session;
 
     @GetMapping
     public ModelAndView login() {
@@ -42,15 +45,15 @@ public class LoginController {
             mav.addObject("formModel", userForm);
             return mav;
         }
-
         // 投稿をテーブルに格納
         UserForm userInfo = userService.findByAccountAndPassword(userForm);
-
-      if (userInfo == null || !userInfo.isStopped()) {
+        //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
+        if (userInfo == null || !userInfo.isStopped()) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
           return new ModelAndView("redirect:/");
-      }
+        }
+        session.setAttribute("user", userInfo);
         // rootへリダイレクト
         return new ModelAndView("redirect:/home");
     }
