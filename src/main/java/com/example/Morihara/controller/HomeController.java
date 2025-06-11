@@ -25,6 +25,9 @@ public class HomeController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    HttpSession session;
+
     /*
      * 投稿内容表示処理
      */

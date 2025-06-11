@@ -15,12 +15,12 @@
     <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
 </div>
 <div class="main-contents">
-    <form method="post" action="/add" th:object="${formModel}">
+    <form th:method="post" action="/addMessage" th:object="${messageInfo}">
         <div class="form-area">
-            <label>件名　<input type="text" name="title"/></label>
-            <label>カテゴリー　<input type="text" name="category"/></label>
-            <label>投稿内容</label>
-            <textarea class="tweet-box" th:field="*{content}" size="20" maxlength="200" /></textarea><br/>
+            <label>件名　<input type="text" name="title" /></label>
+            <label>カテゴリー　<input type="text" name="category" /></label>
+            <label>投稿内容</label><br/>
+            <textarea class="tweet-box" name="content"  size="20" maxlength="200" /></textarea><br/>
             <input type="submit" value="投稿" />
         </div>
     </form>
