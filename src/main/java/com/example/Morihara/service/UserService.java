@@ -4,12 +4,15 @@ import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.repository.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,9 +76,27 @@ public class UserService {
     private User setUserEntity(UserForm reqUser) {
         User report = new User();
         report.setId(reqUser.getId());
+        report.setAccount(reqUser.getAccount());
+        report.setPassword(reqUser.getPassword());
+        report.setName(reqUser.getName());
+        report.setBranchId(reqUser.getBranchId());
+        report.setDepartmentId(reqUser.getBranchId());
+        report.setIsStopped(reqUser.getIsStopped());
         return report;
     }
+
+//    private final Logger logger = LoggerFactory.getLogger(UserService.class);
+//    // ユーザー名の重複をチェックするメソッド
+//    public boolean isUsernameTaken(String username) {
+//        // ユーザー名が重複しているかをチェック
+//        logger.debug("isUsernameTaken_username:" + username); // ユーザー名をログ出力
+//        Optional<User> existingUser = userRepository.findByUsername(username); // 既存のユーザーを取得
+//        logger.debug("isUsernameTaken_existingUser:" + existingUser); // 既存のユーザーをログ出力
+//        return existingUser.isPresent(); // 既存のユーザーが存在するかを返す
+//    }
+
     public void deleteUser(Integer id){
+
         userRepository.deleteById(id);
     }
 }
