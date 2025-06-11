@@ -1,78 +1,51 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <link th:href="@{/css/style.css}" rel="stylesheet">
-        <title>ホーム画面</title>
-    </head>
-    <body>
-        <div class="header-contents">
-            <h1>ホーム画面</h1>
-            <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
-        </div>
-        <form th:action="@{/logout}">
-            <button type="submit">ログアウト</button>
-        </form>
-        <form th:action="@{/singUp}">
-            <button type="submit">ユーザー登録画面</button>
-        </form>
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>ホーム画面</title>
+</head>
+<body>
+<div class="header-contents">
+    <h1>ホーム画面</h1>
+    <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
+</div>
+<form th:action="@{/logout}">
+    <button type="submit">ログアウト</button>
+</form>
+<form th:action="@{/singUp}">
+    <button type="submit">ユーザー登録画面</button>
+</form>
 
-        <div class="main-contents">
-            <!--  新規タスク -->
-            <form th:action="@{/message}" th:method="get" th:object="${user}">
-                <button type="submit">新規投稿</button>
-            </form>
+<div class="main-contents">
+    <!--  新規タスク -->
+    <form th:action="@{/message}" th:method="get" th:object="${user}">
+        <button type="submit">新規投稿</button>
+    </form>
 
-            <!-- 検索フォーム -->
-            <form th:action="@{/}" method="get">
-                <label>絞り込み <input type="date" name="startDate"/></label>
-                ～
-                <label><input type="date" name="endDate"/></label>
+    <!-- 検索フォーム -->
+    <form th:action="@{/}" method="get">
+        <label>絞り込み <input type="date" name="startDate"/></label>
+        ～
+        <label><input type="date" name="endDate"/></label>
 
-                <label>カテゴリー　<input type="text" name="content"/></label>
+        <label>カテゴリー　<input type="text" name="content"/></label>
 
-                <button type="submit">絞込</button>
-            </form>
-        </div>
-        <div class="message-icon" th:each="content : ${contents}">
-            <div>
-                ID : <span th:text="${content.id}"/>
-            </div>
-            <div class="text">
-                投稿 : <span th:text="${content.content}"/>
-            </div>
-            <div class="action-button">
-                <div class="delete-button">
-                    <form th:action="@{/delete/{id}(id=${content.id})}" th:method="delete">
-                        <input type="submit" value="削除">
-                    </form>
-                </div>
-            </div>
-            <div class="comment-button">
-                <p>匿名コメント</p>
-                <form th:action="@{/comment/add}" method="post" th:object="${formComment}">
-                    <!-- コメント投稿のエラーがあり　そのエラーがこのId　ならば　エラーメッセージを表示する               -->
-                    <!-- 投稿全てにエラーがひょうじされた。　どのよう投稿に対してエラーが発生しているかわからなくなった。   -->
-                    <div th:if="${commentError} and ${errorReportId != null} and ${errorReportId.intValue() == content.id}"
-                         class="error">
-                        <p th:text="${errorMessage}"></p>
-                    </div>
-                    <!--どの投稿に対するコメントかをhiddenで隠れて送ってる。-->
-                    <input type="hidden" name="reportId" th:value="${content.id}"/>
-                    <input type="text" name="content" placeholder="コメントを書く"/>
-                    <button type="submit">送信</button>
-                </form>
-                <div th:each="comment : ${content.comments}">
-                    <p th:text="${comment.content}">コメント内容</p>
-                    <div>
-                        <div class="commentDelete-button">
-                            <form th:action="@{/commentDelete/{id}(id=${comment.id})}" th:method="delete">
-                                <input type="submit" value="削除">
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
+        <button type="submit">絞込</button>
+    </form>
+</div>
+<table>
+    <tr>
+        <th>投稿内容</th>
+
+
+    <tr th:each="messageInfo : ${messages}" >
+
+        <td>
+            <pre class="wrap-text" th:text="*{content}">内容</pre>
+        </td>
+
+    </tr>
+</table>
+</body>
 </html>

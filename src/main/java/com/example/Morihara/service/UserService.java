@@ -44,7 +44,7 @@ public class UserService {
             user.setPassword(result.getPassword());
             user.setBranchId(result.getBranchId());
             user.setDepartmentId(result.getDepartmentId());
-            user.setStopped(result.isStopped());
+            user.setIsStopped(result.getIsStopped());
             user.setCreatedDate(result.getCreatedDate());
             user.setUpdatedDate(result.getUpdatedDate());
             users.add(user);
@@ -81,7 +81,7 @@ public class UserService {
         report.setName(reqUser.getName());
         report.setBranchId(reqUser.getBranchId());
         report.setDepartmentId(reqUser.getBranchId());
-        report.setStopped(reqUser.isStopped());
+        report.setIsStopped(reqUser.getIsStopped());
         return report;
     }
 

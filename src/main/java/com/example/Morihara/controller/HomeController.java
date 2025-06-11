@@ -40,6 +40,7 @@ public class HomeController {
     ) throws ParseException {
         ModelAndView mav = new ModelAndView();
         model.addAttribute("users");
+        //model.addAttribute("messages");
         //model.addAttribute("statuses", User.Status.values()); // ステータスプルダウン用
         model.addAttribute("today", LocalDate.now()); // 今日の日付も渡してあげるわよ
         return "home";
