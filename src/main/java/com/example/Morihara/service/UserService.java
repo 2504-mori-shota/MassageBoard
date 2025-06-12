@@ -45,6 +45,7 @@ public class UserService {
         return users.get(0);
     }
 
+
     private List<UserForm> setUserForm(List<User> results) {
         List<UserForm> users = new ArrayList<>();
 
@@ -108,6 +109,7 @@ public class UserService {
 //        return existingUser.isPresent(); // 既存のユーザーが存在するかを返す
 //    }
 
+<<<<<<< HEAD
     @Transactional
     public void updateStatus(Integer id, int status) {
         User user = userRepository.findById(id)
@@ -127,4 +129,6 @@ public class UserService {
 
 
 
+=======
+>>>>>>> 2ed771ed28c4fdcc1f4c286db887bcaaf1ac8ef2
 }

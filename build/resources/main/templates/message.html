@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>新規投稿</title>
+</head>
+<body>
+<div class="header-contents">
+    <h2>新規投稿</h2>
+</div>
+
+<div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
+    <strong th:text="${errorMessageForm}"></strong>
+    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
+</div>
+<div class="main-contents" th:object="${formModel}">
+    <form th:method="post" action="/addMessage" th:object="${messageInfo}">
+        <div class="form-area">
+            <label>件名　<input type="text" name="title" /></label>
+            <label>カテゴリー　<input type="text" name="category" /></label></br>
+            <label>投稿内容</label></br>
+            <textarea class="tweet-box" name="text" size="20" maxlength="200" th:feild="*{text}"/></textarea><br/>
+            <input type="hidden" name="userId" th:value="${formModel.id}"/>
+            <input type="submit" value="投稿" />
+        </div>
+    </form>
+</div>
+<div class="footer-contents">
+    <form action="/home">
+        <input type="submit" value="戻る" />
+    </form>
+</div>
+</body>
+</html>

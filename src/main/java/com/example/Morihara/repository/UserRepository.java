@@ -12,6 +12,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByAccountAndPassword(String account, String password);
+<<<<<<< HEAD
     @Query("""
             SELECT u FROM User u
             JOIN FETCH u.department
@@ -19,4 +20,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             WHERE u.id = :id
             """)
     List<User> findByIdWithDepartmentAndBranch(@Param("id") int id);
+=======
+
+>>>>>>> 2ed771ed28c4fdcc1f4c286db887bcaaf1ac8ef2
 }
