@@ -16,9 +16,7 @@
 <form th:action="@{/logout}">
     <button type="submit">ログアウト</button>
 </form>
-<form th:action="@{/singUp}">
-    <button type="submit">ユーザー登録画面</button>
-</form>
+
 <form th:action="@{/management}" th:method="get" th:object="${user}">
     <button type="submit">ユーザー管理画面</button>
 </form>
