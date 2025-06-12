@@ -60,6 +60,6 @@ public class singUpController {
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト
-        return new ModelAndView("redirect:/");
+        return new ModelAndView("redirect:/login");
     }
 }

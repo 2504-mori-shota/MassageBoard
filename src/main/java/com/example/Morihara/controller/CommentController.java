@@ -12,9 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
@@ -49,6 +47,11 @@ public class CommentController {
         }
 
         commentService.saveComment(commentForm);
+        return "redirect:/home";
+    }
+    @DeleteMapping("/comment/delete/{id}")
+    public String deleteComment(@PathVariable("id")int id) {
+        commentService.deleteComment(id);
         return "redirect:/home";
     }
 }
