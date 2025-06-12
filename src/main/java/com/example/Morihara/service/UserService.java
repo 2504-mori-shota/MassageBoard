@@ -1,8 +1,10 @@
 package com.example.Morihara.service;
 
 import com.example.Morihara.controller.Form.UserForm;
+import com.example.Morihara.controller.Form.UserInfoForm;
 import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.repository.entity.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,6 +24,16 @@ public class UserService {
     private final UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+
+    public List<UserForm>  findByAllUser(){
+        List<User> userList = userRepository.findAll();
+        List<UserForm> users = setUserForm(userList);
+        return users;
+
+    }
+
+
+
 
     public UserForm findByAccountAndPassword(UserForm userForm){
 
@@ -96,4 +109,20 @@ public class UserService {
 //        return existingUser.isPresent(); // 既存のユーザーが存在するかを返す
 //    }
 
+    @Transactional
+    public void updateStatus(Integer id, int status) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("指定されたidが見つかりません: ID=" + id));
+        user.setIsStopped(status);
+        user.setUpdatedDate(new Date());
+        userRepository.save(user);
+    }
+
+    public void deleteUser(Integer id){
+
+        userRepository.deleteById(id);
+    }
+    public List<User> findByIdWithDepartmentAndBranch(int id){
+        return userRepository.findByIdWithDepartmentAndBranch(id);
+    }
 }

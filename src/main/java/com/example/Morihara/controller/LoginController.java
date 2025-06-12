@@ -48,7 +48,7 @@ public class LoginController {
         // 投稿をテーブルに格納
         UserForm userInfo = userService.findByAccountAndPassword(userForm);
         //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
-        if (userInfo == null || userInfo.getIsStopped() ==1) {
+        if (userInfo == null || userInfo.getIsStopped() == 1) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
           return new ModelAndView("redirect:/");

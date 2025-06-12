@@ -8,13 +8,16 @@
 <body>
 <div class="header-contents">
     <h1>ホーム画面</h1>
+    <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
+        <strong th:text="${errorMessageForm}"></strong>
+    </div>
     <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
 </div>
 <form th:action="@{/logout}">
     <button type="submit">ログアウト</button>
 </form>
-<form th:action="@{/singUp}">
-    <button type="submit">ユーザー登録画面</button>
+<form th:action="@{/management}" th:method="get" th:object="${user}">
+    <button type="submit">ユーザー管理画面</button>
 </form>
 
 <div class="main-contents">

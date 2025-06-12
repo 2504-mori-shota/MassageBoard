@@ -46,20 +46,19 @@ public class singUpController {
             RedirectAttributes redirectAttributes,
             Model model
     ) throws ParseException {
+        // パスワード確認チェックを先に追加
+        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+            result.rejectValue("passwordConfirm", null, "パスワードが一致しません");
+        }
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("/singUp");
             mav.addObject("formModel", userForm);
             return mav;
         }
-        // ユーザー名の重複をチェック
-//        if (userService.isUsernameTaken(userForm.getName())) {
-//            ModelAndView mav = new ModelAndView("/singUp");
-//            result.rejectValue("account", "account", "ユーザー名が既に使用されています");
-//            return mav; // エラーパラメータを追加
-//        }
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト
-        return new ModelAndView("redirect:/login");
+        return new ModelAndView("redirect:/");
     }
 }

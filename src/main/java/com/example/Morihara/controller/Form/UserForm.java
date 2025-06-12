@@ -1,5 +1,6 @@
 package com.example.Morihara.controller.Form;
 
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,9 +22,13 @@ public class UserForm {
     @Pattern(regexp = "^[^　]*$", message = "パスワードを入力してください")
     private String password;
 
+    @Transient // DBにマッピングしない
+    private String passwordConfirm;
+
     private String name;
 
     private int branchId;
+
 
     private int  departmentId;
 
