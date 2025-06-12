@@ -1,13 +1,10 @@
 package com.example.Morihara.service;
 
 import com.example.Morihara.controller.Form.UserForm;
-import com.example.Morihara.controller.Form.UserInfoForm;
 import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.repository.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -94,7 +90,7 @@ public class UserService {
         report.setPassword(reqUser.getPassword());
         report.setName(reqUser.getName());
         report.setBranchId(reqUser.getBranchId());
-        report.setDepartmentId(reqUser.getDepartmentId());
+        report.setDepartmentId(reqUser.getBranchId());
         report.setIsStopped(reqUser.getIsStopped());
         return report;
     }
@@ -122,7 +118,18 @@ public class UserService {
 
         userRepository.deleteById(id);
     }
+
     public List<User> findByIdWithDepartmentAndBranch(int id){
         return userRepository.findByIdWithDepartmentAndBranch(id);
     }
+
+    public User findById(int id){
+        return userRepository.findById(id);
+    }
+    @Transactional
+    public void updateUser(UserForm userForm) {
+        User saveUser = setUserEntity(userForm);
+        userRepository.save(saveUser);
+    }
+
 }

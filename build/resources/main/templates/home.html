@@ -16,6 +16,7 @@
 <form th:action="@{/logout}">
     <button type="submit">ログアウト</button>
 </form>
+
 <form th:action="@{/management}" th:method="get" th:object="${user}">
     <button type="submit">ユーザー管理画面</button>
 </form>
@@ -52,16 +53,12 @@
         <div class="delete-button">
             <form th:action="@{/message/delete/{id}(id=${messageInfo.id})}" th:method="post">
                 <input type="hidden" name="_method" value="delete"/>
-                <button type="submit" onclick="return confirm('消去しますか？');">削除</button>
+                <button type="submit" onclick="return confirm('消去しますか？');">消去</button>
             </form>
         </div>
         <!-- コメント表示 -->
         <div class="comments" th:each="comment : ${messageInfo.comments}">
             <p>コメント: <span th:text="${comment.text}"></span></p>
-            <form th:action="@{/comment/delete/{id}(id=${comment.id})}" th:method="post">
-                <input type="hidden" name="_method" value="delete"/>
-                <input type="submit" value="コメント削除">
-            </form>
         </div>
 
         <!-- コメント投稿フォーム -->

@@ -27,14 +27,14 @@ public class UserForm {
 
     private String name;
 
-    private int branchId;
+    private Integer branchId;
 
-
-    private int  departmentId;
+    private Integer  departmentId;
 
     private int isStopped;
 
-
     private Date createdDate;
     private Date updatedDate;
+
+
 }
