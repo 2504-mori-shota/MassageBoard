@@ -39,7 +39,7 @@ public class User {
 
     @Column(name = "created_date", insertable = false, updatable = false)
     private Date createdDate;
-    @Column(name="updated_date",insertable = false)
+    @Column(name="updated_date",insertable = false, updatable = false)
     private Date updatedDate;
 
     public enum isStopped {
