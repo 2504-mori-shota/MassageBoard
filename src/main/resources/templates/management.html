@@ -14,20 +14,20 @@
     </form>
     <div class="main-contents">
       <!--  新規タスク -->
-      <tr th:each="user : ${users}" th:object="${user}">
+      <tr th:each="user : ${users}" th:object="${users}">
 
         <td>
-          <pre class="wrap-text" th:value="*{user.account}">アカウント名</pre>
+          <div class="wrap-text" name="account" th:text="${user.account}"></div>
         </td>
 
         <td>
-          <form th:action="@{/stop}" th:method="post">
-            <input type="hidden" name="id" th:value="*{id}" />
+          <form th:action="@{/updateStatus}" th:method="post">
+            <input type="hidden" name="id" th:value="${user.id}" />
             <select name="status">
             <option th:each="status : ${statuses}"
                     th:value="${status.ordinal()}"
                     th:text="${status}"
-                    th:selected="${status.ordinal() == task.status}">
+                    th:selected="${status.ordinal() == user.isStopped}">
             </option>
           </select>
             <button type="submit" onclick="return confirm('変更しますか？');">変更</button>

@@ -31,12 +31,16 @@ public class MessageController {
     HttpSession session;
 
     @GetMapping("/message")
-    public ModelAndView newContent(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView newContent
+            (HttpServletRequest request, HttpServletResponse response,
+             BindingResult result,
+             RedirectAttributes redirectAttributes) {
         session = request.getSession();
         // セッションからユーザーオブジェクトを取得
         UserForm user = (UserForm) session.getAttribute("user");
         if (user == null) {
-            //return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            redirectAttributes.addFlashAttribute("errorMessageForm", "ログインしてください");
+            return new ModelAndView("redirect:/");
         }
         ModelAndView mav = new ModelAndView();
         // form用の空のentityを準備
