@@ -15,7 +15,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class singUpController {
@@ -26,14 +28,33 @@ public class singUpController {
     @GetMapping("/singUp")
     public ModelAndView newContent() {
         ModelAndView mav = new ModelAndView();
-        // form用の空のentityを準備
         UserForm userForm = new UserForm();
+
+        mav.addObject("formModel", userForm);
+        //プルダウンで使用
+        mav.addObject("branchOptions", getBranchOptions());
+        mav.addObject("departmentOptions", getDepartmentOptions());
         // 画面遷移先を指定
         mav.setViewName("/singUp");
-        // 準備した空のFormを保管
-        mav.addObject("formModel", userForm);
-        // mav.addObject("errorMessageForm", errorMessages);
         return mav;
+    }
+
+    // コントローラー内に選択肢を返すメソッド プルダウンで使用
+    private Map<Integer, String> getBranchOptions() {
+        Map<Integer, String> options = new LinkedHashMap<>();
+        options.put(1, "本社");
+        options.put(2, "A支社");
+        options.put(3, "B支社");
+        options.put(4, "C支社");
+        return options;
+    }
+    private Map<Integer, String> getDepartmentOptions() {
+        Map<Integer, String> options = new LinkedHashMap<>();
+        options.put(1, "総務人事部");
+        options.put(2, "情報管理部");
+        options.put(3, "営業部");
+        options.put(4, "技術部");
+        return options;
     }
 
     /*
@@ -46,17 +67,19 @@ public class singUpController {
             RedirectAttributes redirectAttributes,
             Model model
     ) throws ParseException {
+        // パスワード確認チェックを先に追加
+        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+            result.rejectValue("passwordConfirm", null, "パスワードが一致しません");
+        }
+
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("/singUp");
             mav.addObject("formModel", userForm);
+
+            mav.addObject("branchOptions", getBranchOptions());
+            mav.addObject("departmentOptions",getDepartmentOptions());
             return mav;
         }
-        // ユーザー名の重複をチェック
-//        if (userService.isUsernameTaken(userForm.getName())) {
-//            ModelAndView mav = new ModelAndView("/singUp");
-//            result.rejectValue("account", "account", "ユーザー名が既に使用されています");
-//            return mav; // エラーパラメータを追加
-//        }
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト

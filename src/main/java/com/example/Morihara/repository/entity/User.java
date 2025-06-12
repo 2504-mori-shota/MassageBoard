@@ -32,13 +32,26 @@ public class User {
     private int branchId;
 
     @Column(name = "department_id")
-    private int  departmentId;
+    private int departmentId;
 
     @Column(name = "is_stopped")
     private int isStopped;
 
-    @Column(insertable = false, updatable = false)
+    @Column(name = "created_date", insertable = false, updatable = false)
     private Date createdDate;
-    @Column(insertable = false)
+    @Column(name="updated_date",insertable = false, updatable = false)
     private Date updatedDate;
+
+    public enum isStopped {
+        有効, 停止中
+    }
+
+
+    @ManyToOne
+    @JoinColumn(name = "department_id", insertable = false, updatable = false)
+    private Department department;
+
+    @ManyToOne
+    @JoinColumn(name = "branch_id", insertable = false, updatable = false)
+    private Branch branch;
 }

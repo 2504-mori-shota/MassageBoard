@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/style.css}" rel="stylesheet">
+    <title>ユーザー管理画面</title>
+  </head>
+  <body>
+    <div class="header-contents">
+      <h1>ユーザー管理画面</h1>
+    </div>
+    <form th:action="@{/singUp}">
+      <button type="submit">ユーザー登録画面</button>
+    </form>
+    <form th:action="@{/home}">
+      <button type="submit">戻りまーーーす！！</button>
+    </form>
+    <div class="main-contents">
+      <!--  新規タスク -->
+      <tr th:each="user : ${users}" th:object="${users}">
+
+        <td>
+          <div class="wrap-text" name="account" th:text="${user.account}"></div>
+        </td>
+
+        <td>
+          <form th:action="@{/updateStatus}" th:method="post">
+            <input type="hidden" name="id" th:value="${user.id}" />
+            <select name="status">
+            <option th:each="status : ${statuses}"
+                    th:value="${status.ordinal()}"
+                    th:text="${status}"
+                    th:selected="${status.ordinal() == user.isStopped}">
+            </option>
+          </select>
+            <button type="submit" onclick="return confirm('変更しますか？');">変更</button>
+          </form>
+        </td>
+        <td>
+          <form th:action="@{/userEdit}" th:method="post">
+            <input th:type="hidden" name="id" th:value="${user.id}">
+            <input type="submit" value="編集"/>
+          </form>
+        </td>
+      </tr>
+    </div>
+  </body>
+</html>

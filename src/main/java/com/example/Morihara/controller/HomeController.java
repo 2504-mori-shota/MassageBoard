@@ -1,7 +1,12 @@
 package com.example.Morihara.controller;
 
+import com.example.Morihara.controller.Form.CommentForm;
+import com.example.Morihara.controller.Form.MessageForm;
 import com.example.Morihara.controller.Form.UserForm;
+import com.example.Morihara.repository.MessageRepository;
 import com.example.Morihara.repository.UserRepository;
+import com.example.Morihara.service.CommentService;
+import com.example.Morihara.service.MessageService;
 import com.example.Morihara.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -27,6 +32,15 @@ public class HomeController {
     UserRepository userRepository;
 
     @Autowired
+    MessageRepository messageRepository;
+
+    @Autowired
+    MessageService messageService;
+
+    @Autowired
+    CommentService commentService;
+
+    @Autowired
     HttpSession session;
 
     /*
@@ -34,16 +48,21 @@ public class HomeController {
      */
 
     @GetMapping("/home")
-    public String showTop( @RequestParam(name = "startDate", required = false)String startDate ,
-                           @RequestParam(name="endDate", required = false )String endDate,
-                           Model model
-    ) throws ParseException {
+    public ModelAndView showTop(@RequestParam(name = "startDate", required = false) String startDate,
+                                @RequestParam(name = "endDate", required = false) String endDate) {
         ModelAndView mav = new ModelAndView();
-        model.addAttribute("users");
-        //model.addAttribute("messages");
-        //model.addAttribute("statuses", User.Status.values()); // ステータスプルダウン用
-        model.addAttribute("today", LocalDate.now()); // 今日の日付も渡してあげるわよ
-        return "home";
+
+        List<MessageForm> messageList = messageService.findAllMessages();  // 変数名を統一
+
+        for (MessageForm message : messageList) {
+            List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
+            message.setComments(comments);
+        }
+
+        mav.setViewName("/home");
+        mav.addObject("messages", messageList);
+        // コメントを別に渡す必要はないです。messagesに含まれているので不要
+        return mav;
     }
 
    @RequestMapping("/logout")
@@ -55,11 +74,14 @@ public class HomeController {
        return "redirect:/"; // ログアウト成功後のリダイレクト
    }
 
-    @GetMapping("/message/delete/{id}")
-    public String deleteTask(@PathVariable("id") Long id) {
-        userRepository.deleteById(Math.toIntExact(id));
-        return "redirect:/"; // 一覧画面に戻す
+    @DeleteMapping("/message/delete/{id}")
+    public ModelAndView deleteMessage(@PathVariable("id") int id) {
+        //投稿をテーブルに格納
+        messageService.deleteMessage(id);
+        //rootへリダイレクト
+        return new ModelAndView("redirect:/home");
     }
+
 //    @PostMapping("/task/updateStatus")
 //    public String updateStatus(@RequestParam Long id,@RequestParam int status){
 //        reportService.updateStatus(id, status);
