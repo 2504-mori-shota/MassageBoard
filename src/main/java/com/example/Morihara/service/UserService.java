@@ -32,6 +32,7 @@ public class UserService {
         return users.get(0);
     }
 
+
     private List<UserForm> setUserForm(List<User> results) {
         List<UserForm> users = new ArrayList<>();
 
@@ -95,8 +96,4 @@ public class UserService {
 //        return existingUser.isPresent(); // 既存のユーザーが存在するかを返す
 //    }
 
-    public void deleteUser(Integer id){
-
-        userRepository.deleteById(id);
-    }
 }

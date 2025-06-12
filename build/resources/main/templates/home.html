@@ -34,18 +34,31 @@
         <button type="submit">絞込</button>
     </form>
 </div>
-<table>
-    <tr>
-        <th>投稿内容</th>
+<div class="message-icon" th:each="messageInfo : ${messages}">
 
+    <div class="text">
+        投稿 : <span th:text="${messageInfo.text}"/>
+    </div>
+    <div class="action-button">
+        <div class="delete-button">
+            <form th:action="@{/message/delete/{id}(id=${messageInfo.id})}" th:method="post">
+                <input type="hidden" name="_method" value="delete"/>
+                <input type="submit" value="削除">
+            </form>
+        </div>
+        <!-- コメント表示 -->
+        <div class="comments" th:each="comment : ${messageInfo.comments}">
+            <p>コメント: <span th:text="${comment.text}"></span></p>
+        </div>
 
-    <tr th:each="messageInfo : ${messages}" >
-
-        <td>
-            <pre class="wrap-text" th:text="*{content}">内容</pre>
-        </td>
-
-    </tr>
-</table>
+        <!-- コメント投稿フォーム -->
+        <form th:action="@{/addComment}" method="post">
+            <input type="hidden" name="messageId" th:value="${messageInfo.id}" />
+            <input type="hidden" name="userId" th:value="${session.user.id}" />
+            <input type="text" name="text" placeholder="コメントを書く" required />
+            <button type="submit">送信</button>
+        </form>
+    </div>
+</div>
 </body>
 </html>
