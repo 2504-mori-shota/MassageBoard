@@ -6,6 +6,7 @@ import com.example.Morihara.repository.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +36,7 @@ public class UserService {
 
         String account = userForm.getAccount();
         String password = createEndocedPwd(userForm.getPassword());
-        //暗号化は後回しAdd commentMore actions
+        //暗号化は後回し
         List<User> results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
         List<UserForm> users = setUserForm(results);
         return users.get(0);
@@ -65,7 +66,7 @@ public class UserService {
            String encodedPwd = passwordEncoder.encode(pwd);
         return encodedPwd;
     }
-
+/*
     // 暗号化されたあとのpw同士を比較する
     private boolean pwdMatch(String newPwd, String originPwd) {
         if (passwordEncoder.matches(newPwd, originPwd)) {
@@ -84,10 +85,12 @@ public class UserService {
      * リクエストから取得した情報をEntityに設定
      */
     private User setUserEntity(UserForm reqUser) {
+        String encodedPassword = passwordEncoder.encode(reqUser.getPassword());
+
         User report = new User();
         report.setId(reqUser.getId());
         report.setAccount(reqUser.getAccount());
-        report.setPassword(reqUser.getPassword());
+        report.setPassword(encodedPassword);
         report.setName(reqUser.getName());
         report.setBranchId(reqUser.getBranchId());
         report.setDepartmentId(reqUser.getBranchId());
@@ -126,10 +129,14 @@ public class UserService {
     public User findById(int id){
         return userRepository.findById(id);
     }
-    @Transactional
-    public void updateUser(UserForm userForm) {
-        User saveUser = setUserEntity(userForm);
-        userRepository.save(saveUser);
+
+    public User registerUser(String name, String rawPassword){
+        String encodedPassword = passwordEncoder.encode(rawPassword);
+
+        User user = new User();
+        user.setAccount(name);
+        user.setPassword(encodedPassword);
+        return  userRepository.save(user);
     }
 
 }
