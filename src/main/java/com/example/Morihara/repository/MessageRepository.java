@@ -10,5 +10,7 @@ import java.util.List;
 
 @Repository
 public interface MessageRepository extends JpaRepository<Message, Integer> {
-    List<Message>findByCreteDDateBetweenOrderByCreatedDateAsc(Date StrDate, Date EndDate);
+    List<Message>findByCreatedDateBetweenOrderByCreatedDateDesc(Date StrDate, Date EndDate);
+
+    List<Message>findByCreatedDateBetweenAndCategoryContainingOrderByCreatedDateDesc(Date StrDate, Date EndDate, String category);
 }

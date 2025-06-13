@@ -52,13 +52,14 @@ public class MessageService {
         Date StrDate = df.parse(StrStartDate);
         Date EndDate = df.parse(StrEndDate);
 
-        if(category == null){
-            List<Message> results = messageRepository.findByCreteDDateBetweenOrderByCreatedDateAsc(StrDate, EndDate);
+        if(StringUtils.isBlank(category)){
+            List<Message> results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(StrDate, EndDate);
+            return setMessageForm(results);
+        } else {
+            List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryContainingOrderByCreatedDateDesc(StrDate, EndDate, category);
             return setMessageForm(results);
         }
 
-        List<Message> results = messageRepository.findAll();
-        return setMessageForm(results);
 
     }
     private List<MessageForm> setMessageForm(List<Message> results) {
