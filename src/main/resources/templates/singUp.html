@@ -28,7 +28,7 @@
 
         <label>パスワード確認<br/>
             <input type="password" th:field="*{passwordConfirm}" required /></label><br/>
-            <div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}"></div><br/>
+            <div th:if="${#fields.hasErrors('passwordConfirm')}" style="color:red;" th:errors="*{passwordConfirm}"></div><br/>
 
         <label>氏名<br/>
             <input type="text" th:field="*{name}" class="form-control"></label><br/>
@@ -42,6 +42,7 @@
                             th:text="${entry.value}"></option>
                 </select>
             </label><br/>
+        <div th:if="${#fields.hasErrors('branchId')}" style="color:red;" th:errors="*{branchId}"></div><br/>
 
             <label>部署<br/>
                 <select th:field="*{departmentId}" class="form-control">

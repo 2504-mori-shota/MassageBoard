@@ -27,16 +27,19 @@ public class LoginController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @GetMapping("/")
+    @GetMapping
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView();
-        // form用の空のentityを準備
         UserForm userForm = new UserForm();
+        // ログインフィルターで書いたエラー文をここで受け取る。
+        String errorMessage = (String) session.getAttribute("errorMessageForm");
+        //一度だけ表示させるコード
+        session.removeAttribute("errorMessageForm");
         // 画面遷移先を指定
-        mav.setViewName("/login");
+        mav.setViewName("login");
         // 準備した空のFormを保管
         mav.addObject("formModel", userForm);
-        // mav.addObject("errorMessageForm", errorMessages);
+        mav.addObject("errorMessageForm", errorMessage);
         return mav;
     }
 
@@ -58,9 +61,9 @@ public class LoginController {
       if (userInfo == null || userInfo.getIsStopped() == 1 ||!passwordEncoder.matches(userForm.getPassword(), userInfo.getPassword())) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
-          return new ModelAndView("redirect:/login");
-      }
-      session.setAttribute("user", userInfo);
+          return new ModelAndView("redirect:/");
+        }
+        session.setAttribute("user", userInfo);
         // rootへリダイレクト
         return new ModelAndView("redirect:/home");
     }
