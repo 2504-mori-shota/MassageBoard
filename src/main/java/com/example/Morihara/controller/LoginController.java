@@ -34,7 +34,7 @@ public class LoginController {
         return mav;
     }
 
-  @PostMapping("/loading")
+  /*@PostMapping("/loading")
     public ModelAndView addContent(
             @Valid @ModelAttribute("formModel") UserForm userForm,
             BindingResult result,
@@ -46,7 +46,7 @@ public class LoginController {
             return mav;
         }
         // 投稿をテーブルに格納
-        UserForm userInfo = userService.findByAccountAndPassword(userForm);
+        UserForm userInfo = userService.findByAccount(userForm);
         //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
         if (userInfo == null || userInfo.getIsStopped() == 1) {
           //フラッシュメッセージをセット
@@ -56,5 +56,5 @@ public class LoginController {
         session.setAttribute("user", userInfo);
         // rootへリダイレクト
         return new ModelAndView("redirect:/home");
-    }
+    }*/
 }

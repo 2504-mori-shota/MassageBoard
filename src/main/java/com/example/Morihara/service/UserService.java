@@ -32,12 +32,9 @@ public class UserService {
 
 
 
-    public UserForm findByAccountAndPassword(UserForm userForm){
+    public UserForm findByAccount(String account){
 
-        String account = userForm.getAccount();
-        String password = createEndocedPwd(userForm.getPassword());
-        //暗号化は後回し
-        List<User> results = userRepository.findByAccountAndPassword(account, userForm.getPassword());
+        List<User> results = userRepository.findByAccount(account);
         List<UserForm> users = setUserForm(results);
         return users.get(0);
     }
