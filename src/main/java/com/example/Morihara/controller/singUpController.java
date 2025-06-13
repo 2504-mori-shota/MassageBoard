@@ -62,12 +62,12 @@ public class singUpController {
      */
     @PostMapping("/insert")
 
-    public ModelAndView addContent(
+    public ModelAndView addContent(@Validated(UserForm.SingUpGroup.class)
             @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model
     ) throws ParseException {
-        // パスワード確認チェックを先に追加
+        // パスワード確認チェック
         if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
             result.rejectValue("passwordConfirm", null, "パスワードが一致しません");
         }
