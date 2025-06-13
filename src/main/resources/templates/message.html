@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet">
@@ -12,22 +12,34 @@
 
 <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
     <strong th:text="${errorMessageForm}"></strong>
-    <!-- <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>-->
 </div>
+
 <div class="main-contents" th:object="${formModel}">
-    <form th:method="post" action="/addMessage" th:object="${messageInfo}">
+    <form th:method="post" th:action="@{/addMessage}" th:object="${messageInfo}">
         <div class="form-area">
-            <label>件名　<input type="text" name="title" /></label>
-            <label>カテゴリー　<input type="text" name="category" /></label></br>
-            <label>投稿内容</label></br>
-            <textarea class="tweet-box" name="text" size="20" maxlength="200" th:feild="*{text}"/></textarea><br/>
-            <input type="hidden" name="userId" th:value="${formModel.id}"/>
+            <label>件名　
+                <input type="text" th:field="*{title}" />
+            </label>
+            <div th:if="${#fields.hasErrors('title')}" style="color:red;" th:errors="*{title}"></div>
+
+            <label>カテゴリー　
+                <input type="text" th:field="*{category}" />
+            </label>
+            <div th:if="${#fields.hasErrors('category')}" style="color:red;" th:errors="*{category}"></div>
+
+            <label>投稿内容</label><br/>
+            <textarea class="tweet-box" th:field="*{text}" maxlength="1000"></textarea><br/>
+            <div th:if="${#fields.hasErrors('text')}" style="color:red;" th:errors="*{text}"></div>
+
+            <input type="hidden" th:field="*{userId}" th:value="${formModel.id}" />
+
             <input type="submit" value="投稿" />
         </div>
     </form>
 </div>
+
 <div class="footer-contents">
-    <form action="/home">
+    <form th:action="@{/home}">
         <input type="submit" value="戻る" />
     </form>
 </div>

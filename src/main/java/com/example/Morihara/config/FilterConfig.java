@@ -13,8 +13,8 @@ public class FilterConfig {
 
         bean.setFilter(new LoginFilter());
         //ログイン情報が必要なURL
-        //bean.addUrlPatterns("/home");
-        bean.addUrlPatterns("/userEdit/*");
+        bean.addUrlPatterns("/home");
+        bean.addUrlPatterns("/management");
         bean.addUrlPatterns("/singUp");
         bean.setOrder(1);
         return bean;
