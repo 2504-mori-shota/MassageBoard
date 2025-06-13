@@ -8,11 +8,14 @@
   </head>
   <body>
     <div class="main-contents">
+      <div th:if="${param.sessionExpired}">
+        <p style="color : red;">セッションが切れました。再度ログインしてください。</p>
+      </div>
       <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
         <strong th:text="${errorMessageForm}"></strong>
       </div>
 
-      <form th:action="loading" th:method="post" th:object="${formModel}"><br />
+      <form th:action="@{/loading}" th:method="post" th:object="${formModel}"><br />
         <label for="account">アカウント</label>
         <input name="account" id="account"/> <br />
         <div th:if="${#fields.hasErrors('account')}" style="color:red;" th:errors="*{account}"></div>
