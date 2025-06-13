@@ -27,7 +27,7 @@ public class UserForm {
     @NotBlank(message = "パスワードを入力してください", groups = {LoginGroup.class, SingUpGroup.class})
     @Pattern(regexp = "^[^　]*$", message = "パスワードを入力してください",groups = {LoginGroup.class, SingUpGroup.class})
     @Size(min = 6, max = 20, message = "パスワードは6文字以上20文字以内で入力してください", groups = SingUpGroup.class)
-    @Pattern(regexp = "^[a-zA]+$", message = "アカウントは半角かつ6文字以上20文字以内で入力してください", groups = SingUpGroup.class)
+    @Pattern(regexp = "^[a-zA-Z]+$", message = "アカウントは半角かつ6文字以上20文字以内で入力してください", groups = SingUpGroup.class)
     private String password;
 
     @Transient // DBにマッピングしない
