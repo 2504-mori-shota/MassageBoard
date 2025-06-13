@@ -9,7 +9,7 @@
   <body>
     <div class="main-contents">
       <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
-        <strong th:text="${errorMessageForm}"></strong>
+        <strong th:text="${errorMessageForm}" style="color: red;"></strong>
       </div>
 
       <form th:action="loading" th:method="post" th:object="${formModel}"><br />
