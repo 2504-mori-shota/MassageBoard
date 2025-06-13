@@ -64,11 +64,11 @@
         <!-- コメント投稿フォーム -->
         <form th:action="@{/addComment}" method="post">
             <input type="hidden" name="messageId" th:value="${messageInfo.id}" />
-<!--            ここで、DBにuserId登録してるセッションにつながってるものを-->
+            <!--            ここで、DBにuserId登録してるセッションにつながってるものを-->
             <!-- セッションにuserがいるときだけuserIdを渡す -->
             <input type="hidden" name="userId"
                    th:if="${session.user != null}"
-                   th:value="${session.user.id}" />
+                   th:value="${messageInfo.userId}" />
 
             <input type="text" name="text" placeholder="コメントを書く" required />
             <button type="submit">送信</button>

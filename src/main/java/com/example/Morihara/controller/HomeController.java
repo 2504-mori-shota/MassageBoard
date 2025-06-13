@@ -5,19 +5,24 @@ import com.example.Morihara.controller.Form.MessageForm;
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.MessageRepository;
 import com.example.Morihara.repository.UserRepository;
+import com.example.Morihara.repository.entity.User;
 import com.example.Morihara.service.CommentService;
+import com.example.Morihara.service.CustomUserDetailsService;
 import com.example.Morihara.service.MessageService;
 import com.example.Morihara.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.List;
@@ -48,9 +53,16 @@ public class HomeController {
      */
 
     @GetMapping("/home")
-    public ModelAndView showTop(@RequestParam(name = "startDate", required = false) String startDate,
-                                @RequestParam(name = "endDate", required = false) String endDate) {
+    public ModelAndView showTop(
+            @RequestParam(name = "startDate", required = false) String startDate,
+            @RequestParam(name = "endDate", required = false) String endDate,
+            Principal principal,
+            Model model) {
         ModelAndView mav = new ModelAndView();
+
+        String account = principal.getName() ;
+
+        UserForm user = userService.findByAccount(account);
 
         List<MessageForm> messageList = messageService.findAllMessages();  // 変数名を統一
 
@@ -59,6 +71,8 @@ public class HomeController {
             message.setComments(comments);
         }
 
+        session.setAttribute("user", user);
+        mav.addObject("user", user);
         mav.setViewName("/home");
         mav.addObject("messages", messageList);
         // コメントを別に渡す必要はないです。messagesに含まれているので不要
