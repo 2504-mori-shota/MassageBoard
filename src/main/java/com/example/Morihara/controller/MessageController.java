@@ -63,9 +63,11 @@ public class MessageController {
     Model model
     ) throws ParseException {
         session = request.getSession();
+        UserForm user = (UserForm) session.getAttribute("user"); // セッションから再取得
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView("/message");
             mav.addObject("messageInfo", messageForm);
+            mav.addObject("formModel", user);
             return mav;
         }
         // 投稿をテーブルに格納

@@ -11,8 +11,7 @@ import java.util.List;
 import jakarta.servlet.FilterConfig;
 
 public class LoginFilter implements Filter {
-    @Autowired
-    HttpSession httpSession;
+
     @Override
     public void doFilter(ServletRequest request,
                          ServletResponse response,
@@ -22,18 +21,25 @@ public class LoginFilter implements Filter {
         HttpServletRequest httpRequest = (HttpServletRequest)request;
         HttpServletResponse httpResponse = (HttpServletResponse)response;
 
-        httpSession = httpRequest.getSession(false);
+        String path = httpRequest.getServletPath();
 
-        if (httpSession != null && httpSession.getAttribute("user") != null){
-            chain.doFilter(httpRequest,httpResponse);
-        } else {
-            httpSession = httpRequest.getSession(true);
-            //ここのセッションに詰めた、エラー文をLoginControllerのGetMappingの部分に渡してる。
-            httpSession.setAttribute("errorMessageForm", "ログインしてください");
-            //ログインページにリダイレクト
-            httpResponse.sendRedirect("/");
+        // 除外するパス
+        if (path.equals("/") ||
+                path.equals("/loading")) {
+            chain.doFilter(request, response);
+            return;
         }
 
+        // セッション確認
+        HttpSession session = httpRequest.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            chain.doFilter(request, response);
+        } else {
+            // 新しいセッション作成してエラーメッセージをセット
+            HttpSession newSession = httpRequest.getSession(true);
+            newSession.setAttribute("errorMessageForm", "ログインしなおしてください");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
+        }
     }
 
     @Override
