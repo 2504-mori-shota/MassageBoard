@@ -74,18 +74,7 @@ public class UserService {
         }
         return users;
     }
-        private String createEndocedPwd(String pwd) {
-           String encodedPwd = passwordEncoder.encode(pwd);
-        return encodedPwd;
-    }
-/*
-    // 暗号化されたあとのpw同士を比較する
-    private boolean pwdMatch(String newPwd, String originPwd) {
-        if (passwordEncoder.matches(newPwd, originPwd)) {
-            return true;
-        }
-        return false;
-    }
+
     /*
      * レコード追加
      */
@@ -132,13 +121,5 @@ public class UserService {
         return userRepository.findById(id);
     }
 
-    public User registerUser(String name, String rawPassword){
-        String encodedPassword = passwordEncoder.encode(rawPassword);
-
-        User user = new User();
-        user.setAccount(name);
-        user.setPassword(encodedPassword);
-        return  userRepository.save(user);
-    }
 
 }

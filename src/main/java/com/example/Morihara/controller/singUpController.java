@@ -91,6 +91,6 @@ public class singUpController {
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト
-        return "redirect:/";
+        return "redirect:/management";
     }
 }
