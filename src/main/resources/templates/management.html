@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet">
-    <title>ホーム画面</title>
+    <title>ユーザー管理画面</title>
   </head>
   <body>
     <div class="header-contents">
@@ -11,6 +11,9 @@
     </div>
     <form th:action="@{/singUp}">
       <button type="submit">ユーザー登録画面</button>
+    </form>
+    <form th:action="@{/home}">
+      <button type="submit">戻りまーーーす！！</button>
     </form>
     <div class="main-contents">
       <!--  新規タスク -->

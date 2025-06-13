@@ -33,7 +33,6 @@ public class MessageController {
     @GetMapping("/message")
     public ModelAndView newContent
             (HttpServletRequest request, HttpServletResponse response,
-             BindingResult result,
              RedirectAttributes redirectAttributes) {
         session = request.getSession();
         // セッションからユーザーオブジェクトを取得
