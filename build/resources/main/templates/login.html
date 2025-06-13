@@ -20,6 +20,7 @@
         <label for="password">パスワード</label>
         <input name="password" th:type="password" id="password"/> <br />
         <div th:if="${#fields.hasErrors('password')}" style="color:red;" th:errors="*{password}"></div>
+        <!--<input type="hidden" th:name="${_csrf.parameterAccount}" th:value="${_csrf.token}"/>-->
 
         <input type="submit" value="ログイン" /> <br />
       </form>

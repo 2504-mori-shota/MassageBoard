@@ -22,4 +22,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByIdWithDepartmentAndBranch(@Param("id") int id);
 
     User findById(int id);
+
+    Optional<User> findByAccount(String account);
 }
