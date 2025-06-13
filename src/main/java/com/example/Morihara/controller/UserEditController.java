@@ -40,7 +40,7 @@ public class UserEditController {
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model){
-        userService.updateUser(userForm);
+        userService.saveUser(userForm);
         return new ModelAndView("redirect:/management");
     }
 }
