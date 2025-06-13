@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -22,15 +20,32 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
+    //アカウント重複チェック用
+    public boolean AccountDuB(String account) {
+        List<User> results = userRepository.findByAccount(account);
+        return !results.isEmpty();
+    }
+
+    //支店と部署の組み合わせチェック。
+    public boolean BranchDepartmentComb(Integer branchId, Integer departmentId){
+        //有効な組み合わせを力技解決
+        Map<Integer, List<Integer>> Comb = new HashMap<>();
+        Comb.put(1, List.of(1, 2));//本社、
+        Comb.put(2, List.of(3, 4));//A支社,
+        Comb.put(3, List.of(3, 4));
+        Comb.put(4, List.of(3, 4));
+
+        List<Integer> a = Comb.get(branchId);
+        return a != null && a.contains(departmentId);
+
+    }
+
     public List<UserForm>  findByAllUser(){
         List<User> userList = userRepository.findAll();
         List<UserForm> users = setUserForm(userList);
         return users;
 
     }
-
-
-
 
     public UserForm findByAccount(String account){
 
@@ -94,16 +109,6 @@ public class UserService {
         report.setIsStopped(reqUser.getIsStopped());
         return report;
     }
-
-//    private final Logger logger = LoggerFactory.getLogger(UserService.class);
-//    // ユーザー名の重複をチェックするメソッド
-//    public boolean isUsernameTaken(String username) {
-//        // ユーザー名が重複しているかをチェック
-//        logger.debug("isUsernameTaken_username:" + username); // ユーザー名をログ出力
-//        Optional<User> existingUser = userRepository.findByUsername(username); // 既存のユーザーを取得
-//        logger.debug("isUsernameTaken_existingUser:" + existingUser); // 既存のユーザーをログ出力
-//        return existingUser.isPresent(); // 既存のユーザーが存在するかを返す
-//    }
 
     @Transactional
     public void updateStatus(Integer id, int status) {

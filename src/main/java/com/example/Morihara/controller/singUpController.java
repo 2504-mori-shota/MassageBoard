@@ -48,6 +48,7 @@ public class singUpController {
         options.put(4, "C支社");
         return options;
     }
+
     private Map<Integer, String> getDepartmentOptions() {
         Map<Integer, String> options = new LinkedHashMap<>();
         options.put(1, "総務人事部");
@@ -62,27 +63,34 @@ public class singUpController {
      */
     @PostMapping("/insert")
 
-    public ModelAndView addContent(
-            @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result,
-            RedirectAttributes redirectAttributes,
-            Model model
+    public String addContent(@Validated(UserForm.SingUpGroup.class)
+                                   @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result,
+                                   RedirectAttributes redirectAttributes,
+                                   Model model
     ) throws ParseException {
-        // パスワード確認チェックを先に追加
-        if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
-            result.rejectValue("passwordConfirm", null, "パスワードが一致しません");
+        // パスワード確認チェック
+        if (!result.hasFieldErrors("passwordConfirm") &&
+                !userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+            result.rejectValue("passwordConfirm", null, "パスワードとパスワード確認が一致しません");
+        }
+        // アカウント重複チェック
+        if (userService.AccountDuB(userForm.getAccount())) {
+            result.rejectValue("account", "duplicate", "このアカウントはすでに使用されています");
+        }
+
+        // 支社と部署の組み合わせチェック
+        if (!userService.BranchDepartmentComb(userForm.getBranchId(), userForm.getDepartmentId())) {
+            result.rejectValue("branchId", "mismatch","支社と部署の組み合わせが不正です");
         }
 
         if (result.hasErrors()) {
-            ModelAndView mav = new ModelAndView("/singUp");
-            mav.addObject("formModel", userForm);
-
-            mav.addObject("branchOptions", getBranchOptions());
-            mav.addObject("departmentOptions",getDepartmentOptions());
-            return mav;
+            model.addAttribute("branchOptions", getBranchOptions());
+            model.addAttribute("departmentOptions", getDepartmentOptions());
+            return "singUp"; // フォワードで遷移
         }
         // 投稿をテーブルに格納
         userService.saveUser(userForm);
         // rootへリダイレクト
-        return new ModelAndView("redirect:/");
+        return "redirect:/";
     }
 }
