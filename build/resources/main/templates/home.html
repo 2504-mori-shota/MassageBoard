@@ -28,12 +28,12 @@
     </form>
 
     <!-- 検索フォーム -->
-    <form th:action="@{/}" method="get">
+    <form th:action="@{/home}" method="get">
         <label>絞り込み <input type="date" name="startDate"/></label>
         ～
         <label><input type="date" name="endDate"/></label>
 
-        <label>カテゴリー　<input type="text" name="content"/></label>
+        <label>カテゴリー　<input type="text" name="category"/></label>
 
         <button type="submit">絞込</button>
     </form>

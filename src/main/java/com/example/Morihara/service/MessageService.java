@@ -5,11 +5,15 @@ import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.MessageRepository;
 import com.example.Morihara.repository.entity.Message;
 import com.example.Morihara.repository.entity.User;
+import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -33,11 +37,29 @@ public class MessageService {
         message.setUpdatedDate(reqMessage.getUpdatedDate());
         return message;
     }
-    public List<MessageForm> findAllMessages(){
+    public List<MessageForm> findByMessages(String startDate, String endDate, String category) throws ParseException {
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String StrStartDate = "2020-01-01 00:00:00";
+        String StrEndDate = "2100-12-31 23:59:59";
 
-        List<Message> results = messageRepository.findAll();
-        List<MessageForm> messages = setMessageForm(results);
-        return messages;
+        if (!StringUtils.isBlank(startDate)) {
+            StrStartDate = startDate + " 00:00:00";
+        }
+        if (!StringUtils.isBlank(endDate)) {
+            StrEndDate = endDate + " 23:59:59";
+        }
+
+        Date StrDate = df.parse(StrStartDate);
+        Date EndDate = df.parse(StrEndDate);
+
+        if(StringUtils.isBlank(category)){
+            List<Message> results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(StrDate, EndDate);
+            return setMessageForm(results);
+        } else {
+            List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryContainingOrderByCreatedDateDesc(StrDate, EndDate, category);
+            return setMessageForm(results);
+        }
+
 
     }
     private List<MessageForm> setMessageForm(List<Message> results) {

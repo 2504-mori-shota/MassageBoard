@@ -26,7 +26,7 @@ public class LoginController {
     @Autowired
     HttpSession session;
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    PasswordEncoder passwordEncoder;
 
     @GetMapping
     public ModelAndView login() {
@@ -60,7 +60,7 @@ public class LoginController {
       UserForm userInfo = userService.findByAccount(userForm.getAccount());
 
         //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
-      if (userInfo == null || userInfo.getIsStopped() == 1 ||!passwordEncoder.matches(userForm.getPassword(), userInfo.getPassword())) {
+      if (userInfo == null || userInfo.getIsStopped() == 1 || !passwordEncoder.matches(userForm.getPassword(), userInfo.getPassword())) {
           //フラッシュメッセージをセット
           redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
           return new ModelAndView("redirect:/");

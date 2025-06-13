@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -49,11 +50,12 @@ public class HomeController {
     public ModelAndView showTop(
             @RequestParam(name = "startDate", required = false) String startDate,
             @RequestParam(name = "endDate", required = false) String endDate,
+            @RequestParam(name="category",required = false)String category,
             RedirectAttributes redirectAttributes,
-            Model model) {
+            Model model) throws ParseException {
         ModelAndView mav = new ModelAndView();
 
-        List<MessageForm> messageList = messageService.findAllMessages();  // 変数名を統一
+        List<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category);  // 変数名を統一
 
         for (MessageForm message : messageList) {
             List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
