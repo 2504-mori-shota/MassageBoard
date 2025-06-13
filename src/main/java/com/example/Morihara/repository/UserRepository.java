@@ -1,6 +1,5 @@
 package com.example.Morihara.repository;
 
-import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -12,7 +11,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-    List<User> findByAccountAndPassword(String account, String password);
+    List<User> findByAccount(String account);
+
     @Query("""
             SELECT u FROM User u
             JOIN FETCH u.department
@@ -23,5 +23,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User findById(int id);
 
-    Optional<User> findByAccount(String account);
+
 }
