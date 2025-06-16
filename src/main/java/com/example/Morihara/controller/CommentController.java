@@ -4,6 +4,7 @@ import com.example.Morihara.controller.Form.CommentForm;
 import com.example.Morihara.controller.Form.MessageForm;
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.service.CommentService;
+import com.example.Morihara.service.MessageService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -16,11 +17,15 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.text.ParseException;
+import java.util.List;
 
 @Controller
 public class CommentController {
     @Autowired
     CommentService commentService;
+
+    @Autowired
+    MessageService messageService;
     @Autowired
     HttpSession session;
 
@@ -36,18 +41,41 @@ public class CommentController {
 //    }
 
     @PostMapping("/addComment")
-    public String addComment(
+    public ModelAndView addComment(
             @Valid @ModelAttribute CommentForm commentForm,
             BindingResult result,
-            HttpServletRequest request
+            HttpServletRequest request,
+            Model model
+
     ) throws ParseException {
         if (result.hasErrors()) {
-            // エラー処理したければここで redirectAttributes にメッセージ追加してもOK
-            return "redirect:/home";
+            ModelAndView mav = new ModelAndView();
+
+            // homeで必要な投稿一覧を取得
+            List<MessageForm> messageList = messageService.findByMessages(null, null, null);
+            for (MessageForm message : messageList) {
+                List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
+                message.setComments(comments);
+            }
+
+            mav.addObject("messages", messageList);
+            model.addAttribute("commentForm", commentForm);
+            mav.setViewName("home");
+            model.addAttribute("errorMessageId", commentForm.getMessageId()); // どのメッセージのコメントかを記録
+            return mav;
         }
 
+        // セッションからログインユーザーを取得
+        UserForm user = (UserForm) session.getAttribute("user");
+        if (user == null) {
+            return new ModelAndView("redirect:/home");
+        }
+
+        // 正しい userId をセット
+        commentForm.setUserId(user.getId());
+
         commentService.saveComment(commentForm);
-        return "redirect:/home";
+        return new ModelAndView("redirect:/home");
     }
     @DeleteMapping("/comment/delete/{id}")
     public String deleteComment(@PathVariable("id")int id) {
