@@ -117,8 +117,12 @@ public class UserService {
         return userRepository.findByIdWithDepartmentAndBranch(id);
     }
 
-    public User findById(int id){
-        return userRepository.findById(id);
+    public UserForm findById(int id){
+        //月曜日はここから
+        List<User> user = userRepository.findById(id);
+        List<UserForm> userForm = setUserForm(user);
+
+        return userForm.get(0);
     }
 
 

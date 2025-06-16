@@ -22,24 +22,36 @@
           <input type="text" th:field="*{account}" class="form-control"></label><br/>
         <div th:if="${#fields.hasErrors('account')}" style="color:red;" th:errors="*{account}"></div>
 
-        <!-- パラメータ error が存在する場合のみ表示 -->
-        <!--        <div th:if="${param.error}" class="alert alert-danger mt-3" style="width: 500px; margin: 0 auto;">-->
-        <!--            ユーザー名はすでに使われています。-->
-        <!--        </div>-->
-
         <label>パスワード<br/>
           <input type="text" th:field="*{password}" class="form-control"></label><br/>
         <div th:if="${#fields.hasErrors('password')}" style="color:red;" th:errors="*{password}"></div>
+
+        <label>パスワード確認<br/>
+          <input type="password" th:field="*{passwordConfirm}" required/></label><br/>
+        <div th:if="${#fields.hasErrors('passwordConfirm')}" style="color:red;" th:errors="*{passwordConfirm}"></div>
 
         <label>氏名<br/>
           <input type="text" th:field="*{name}" class="form-control"></label><br/>
         <div th:if="${#fields.hasErrors('name')}" style="color:red;" th:errors="*{name}"></div>
 
         <label>支社<br/>
-          <input type="text" th:field="*{branchId}" class="form-control"></label><br/>
+          <select th:field="*{branchId}" class="form-control">
+            <option value="" disabled selected>選択してください</option>
+            <option th:each="entry : ${branchOptions}"
+                    th:value="${entry.key}"
+                    th:text="${entry.value}"></option>
+          </select>
+        </label><br/>
+        <div th:if="${#fields.hasErrors('branchId')}" style="color:red;" th:errors="*{branchId}"></div>
 
         <label>部署<br/>
-          <input type="text" th:field="*{departmentId}" class="form-control"></label><br/>
+          <select th:field="*{departmentId}" class="form-control">
+            <option value="" disabled selected>選択してください</option>
+            <option th:each="entry : ${departmentOptions}"
+                    th:value="${entry.key}"
+                    th:text="${entry.value}"></option>
+          </select>
+        </label><br/>
 
         <form th:action="@{/update}">
           <input th:type="hidden" name="id" th:value="${formModel.id}">
