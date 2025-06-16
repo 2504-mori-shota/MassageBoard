@@ -1,5 +1,6 @@
 package com.example.Morihara.repository;
 
+import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -21,7 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             """)
     List<User> findByIdWithDepartmentAndBranch(@Param("id") int id);
 
-    User findById(int id);
+    List<User> findById(int id);
 
 
 }

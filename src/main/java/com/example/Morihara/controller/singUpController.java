@@ -65,7 +65,6 @@ public class singUpController {
 
     public String addContent(@Validated(UserForm.SingUpGroup.class)
                                    @Valid @ModelAttribute("formModel") UserForm userForm, BindingResult result,
-                                   RedirectAttributes redirectAttributes,
                                    Model model
     ) throws ParseException {
         // パスワード確認チェック
