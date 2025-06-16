@@ -19,11 +19,12 @@
       <!--  新規タスク -->
       <tr th:each="user : ${users}" th:object="${users}">
 
-        <td>
-          <div class="wrap-text" name="account" th:text="${user.account}"></div>
-        </td>
+        <td><div class="wrap-text" th:text="${user.account}"></div></td>
+        <td><div class="wrap-text" th:text="${user.password}"></div></td>
+        <td><div class="wrap-text" th:text="${user.name}"></div></td>
+        <td><div class="wrap-text" th:text="${user.branch.name}"></div></td>
+        <td><div class="wrap-text" th:text="${user.department.name}"></div></td>
 
-        <td>
           <form th:action="@{/updateStatus}" th:method="post">
             <input type="hidden" name="id" th:value="${user.id}" />
             <select name="status">

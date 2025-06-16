@@ -14,6 +14,10 @@ body {
 	width: 80%;
 }
 
+.comment-text {
+    white-space: pre-wrap;
+}
+
 .footer-contents {
 	margin-left: 20px;
 }
