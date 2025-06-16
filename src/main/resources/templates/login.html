@@ -17,7 +17,7 @@
 
       <form th:action="@{/loading}" th:method="post" th:object="${formModel}"><br />
         <label for="account">アカウント</label>
-        <input name="account" id="account"/> <br />
+        <input name="account" id="account" th:field="*{account}"/> <br />
         <div th:if="${#fields.hasErrors('account')}" style="color:red;" th:errors="*{account}"></div>
 
         <label for="password">パスワード</label>

@@ -29,11 +29,11 @@
 
     <!-- 検索フォーム -->
     <form th:action="@{/home}" method="get">
-        <label>絞り込み <input type="date" name="startDate"/></label>
+        <label>絞り込み <input type="date" name="startDate" th:value="${start}"/></label>
         ～
-        <label><input type="date" name="endDate"/></label>
+        <label><input type="date" name="endDate" th:value="${end}"/></label>
 
-        <label>カテゴリー　<input type="text" name="category"/></label>
+        <label>カテゴリー　<input type="text" name="category" th:value="${category}"/></label>
 
         <button type="submit">絞込</button>
     </form>
@@ -43,10 +43,11 @@
 
     <div class="text">
         Id : <span th:text="${messageInfo.id}"/>
-        件名　: <span th:text="${messageInfo.title}"/>
+        件名 : <span th:text="${messageInfo.title}"/>
         カテゴリー : <span th:text="${messageInfo.category}"/><br/>
 
-        投稿 :<span th:text="${messageInfo.text}"/>
+        <strong>投稿 :</strong><br/>
+        <span th:text="${messageInfo.text}" class="wrap-text"/>
 
     </div>
     <div class="action-button">
@@ -58,7 +59,7 @@
         </div>
         <!-- コメント表示 -->
         <div class="comments" th:each="comment : ${messageInfo.comments}">
-            <p>コメント: <span th:text="${comment.text}"></span></p>
+            <p>コメント: <span th:text="${comment.text}" class="wrap-text"></span></p>
         </div>
 
         <!-- コメント投稿フォーム -->
@@ -71,7 +72,7 @@
                    th:value="${messageInfo.userId}" />
 
             <input type="text" name="text" placeholder="コメントを書く" required />
-            <button type="submit">送信</button>
+            <button type="submit">登録</button>
         </form>
     </div>
 </div>

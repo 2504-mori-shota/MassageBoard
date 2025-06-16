@@ -51,6 +51,9 @@ public class UserService {
 
         List<User> results = userRepository.findByAccount(account);
         List<UserForm> users = setUserForm(results);
+        if(users.isEmpty()){
+            return null;
+        }
         return users.get(0);
     }
 

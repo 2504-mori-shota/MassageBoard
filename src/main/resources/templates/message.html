@@ -28,7 +28,7 @@
             <div th:if="${#fields.hasErrors('category')}" style="color:red;" th:errors="*{category}"></div>
 
             <label>投稿内容</label><br/>
-            <textarea class="tweet-box" th:field="*{text}" maxlength="1000"></textarea><br/>
+            <textarea class="tweet-box" th:field="*{text}"></textarea><br/>
             <div th:if="${#fields.hasErrors('text')}" style="color:red;" th:errors="*{text}"></div>
 
             <input type="hidden" th:field="*{userId}" th:value="${formModel.id}" />

@@ -74,7 +74,7 @@ public class singUpController {
         }
         // アカウント重複チェック
         if (userService.AccountDuB(userForm.getAccount())) {
-            result.rejectValue("account", "duplicate", "このアカウントはすでに使用されています");
+            result.rejectValue("account", "duplicate", "アカウントが重複しています");
         }
 
         // 支社と部署の組み合わせチェック
