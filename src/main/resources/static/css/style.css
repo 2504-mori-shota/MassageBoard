@@ -17,6 +17,9 @@ body {
 .comment-text {
     white-space: pre-wrap;
 }
+.alert-error{
+  color: red;
+}
 
 .footer-contents {
 	margin-left: 20px;
