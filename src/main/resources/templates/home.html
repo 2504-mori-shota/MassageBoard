@@ -16,8 +16,9 @@
 <form th:action="@{/logout}">
     <button type="submit">ログアウト</button>
 </form>
-
-<form th:action="@{/management}" th:method="get" th:object="${user}">
+<!--and session.user.departmentId == session.user.department.id == 1 session.user.branch.id -->
+<form th:action="@{/management}" th:method="get" th:object="${user}"
+      th:if="${session.user.branchId == 1 and session.user.departmentId == 1}">
     <button type="submit">ユーザー管理画面</button>
 </form>
 
@@ -52,7 +53,6 @@
     </div>
     <div class="action-button">
         <div class="delete-button">
-<!--            th:if="${session.user != null and session.user.id == message.userId}"-->
             <form th:action="@{/message/delete/{id}(id=${messageInfo.id})}" th:method="post"
                   th:if="${session.user != null and session.user.id == messageInfo.userId}">
                 <input type="hidden" name="_method" value="delete"/>

@@ -36,11 +36,8 @@ public class UserEditController {
     public ModelAndView newContent(
             @PathVariable("id") String strId,
             HttpServletRequest request,
-            HttpServletResponse response,
             RedirectAttributes redirectAttributes) throws IOException {
         ModelAndView mav = new ModelAndView();
-
-
 
         //URLパターンチェック
         UserForm user = null;

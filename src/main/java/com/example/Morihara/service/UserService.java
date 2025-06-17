@@ -75,6 +75,8 @@ public class UserService {
             user.setBranchId(result.getBranchId());
             user.setDepartmentId(result.getDepartmentId());
             user.setIsStopped(result.getIsStopped());
+            user.setBranch(result.getBranch());
+            user.setDepartment(result.getDepartment());
             user.setCreatedDate(result.getCreatedDate());
             user.setUpdatedDate(result.getUpdatedDate());
             users.add(user);
