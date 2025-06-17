@@ -41,10 +41,14 @@ public class UserService {
     }
 
     public List<UserForm>  findByAllUser(){
-        List<User> userList = userRepository.findAll();
+        List<User> userList = userRepository.findAllByOrderByIdAsc();
         List<UserForm> users = setUserForm(userList);
         return users;
 
+    }
+
+    public List<User> findUserById(int id){
+        return userRepository.findByIdWithDepartmentAndBranch(id);
     }
 
     public UserForm findByAccount(String account){
@@ -121,8 +125,14 @@ public class UserService {
     }
 
     public UserForm findById(int id){
-        //月曜日はここから
+
         List<User> user = userRepository.findById(id);
+
+        //URLパラメーターから存在しないidで情報をDBから探しに行ったときにnullで返す
+        if(user == null){
+            return null;
+        }
+
         List<UserForm> userForm = setUserForm(user);
 
         return userForm.get(0);

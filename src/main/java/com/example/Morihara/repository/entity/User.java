@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -54,4 +55,5 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "branch_id", insertable = false, updatable = false)
     private Branch branch;
+
 }
