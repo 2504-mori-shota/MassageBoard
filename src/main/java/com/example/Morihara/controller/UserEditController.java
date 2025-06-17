@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -60,6 +61,7 @@ public class UserEditController {
 
     @PostMapping("/update")
     public String updateUser(
+            @Validated(UserForm.EditGroup.class)
             @Valid @ModelAttribute("formModel") UserForm userForm,
             BindingResult result,
             Model model){
@@ -68,10 +70,7 @@ public class UserEditController {
                 !userForm.getPassword().equals(userForm.getPasswordConfirm())) {
             result.rejectValue("passwordConfirm", null, "パスワードとパスワード確認が一致しません");
         }
-        // アカウント重複チェック
-        if (userService.AccountDuB(userForm.getAccount())) {
-            result.rejectValue("account", "duplicate", "このアカウントはすでに使用されています");
-        }
+
 
         // 支社と部署の組み合わせチェック
         if (!userService.BranchDepartmentComb(userForm.getBranchId(), userForm.getDepartmentId())) {

@@ -64,6 +64,9 @@ public class HomeController {
 
         mav.setViewName("/home");
         mav.addObject("messages", messageList);
+        model.addAttribute("start", startDate);
+        model.addAttribute("end", endDate);
+        model.addAttribute("category", category);
         // コメントを別に渡す必要はないです。messagesに含まれているので不要
         //コメント投稿に対するバリデーション表示でいる。
         mav.addObject("commentForm", new CommentForm());
