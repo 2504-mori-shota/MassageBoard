@@ -16,6 +16,9 @@ public class FilterConfig {
         bean.addUrlPatterns("/home");
         bean.addUrlPatterns("/management");
         bean.addUrlPatterns("/singUp");
+        bean.addUrlPatterns("/message");
+        bean.addUrlPatterns("/userEdit");
+
         bean.setOrder(1);
         return bean;
     }

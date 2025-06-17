@@ -31,7 +31,7 @@ public class UserForm {
     private String password;
 
     @Transient // DBにマッピングしない
-    @NotBlank(message = "パスワード確認を入力してください", groups = SingUpGroup.class)
+    @NotBlank(message = "入力したパスワードと確認用パスワードが一致しません", groups = SingUpGroup.class)
     private String passwordConfirm;
 
     @NotBlank(message = "氏名を入力してください", groups = SingUpGroup.class)
