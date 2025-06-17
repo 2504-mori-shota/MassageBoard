@@ -77,8 +77,9 @@ public class CommentController {
         commentService.saveComment(commentForm);
         return new ModelAndView("redirect:/home");
     }
+
     @DeleteMapping("/comment/delete/{id}")
-    public String deleteComment(@PathVariable("id")int id) {
+    public String deleteComment(@PathVariable("id") int id) {
         commentService.deleteComment(id);
         return "redirect:/home";
     }

@@ -37,7 +37,7 @@ public class LoginFilter implements Filter {
         } else {
             // 新しいセッション作成してエラーメッセージをセット
             HttpSession newSession = httpRequest.getSession(true);
-            newSession.setAttribute("errorMessageForm", "ログインしなおしてください");
+            newSession.setAttribute("errorMessageForm", "ログインしてください");
             httpResponse.sendRedirect(httpRequest.getContextPath() + "/");
         }
     }

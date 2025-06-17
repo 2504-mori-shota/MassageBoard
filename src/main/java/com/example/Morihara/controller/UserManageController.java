@@ -34,10 +34,9 @@ public class UserManageController {
         UserForm user = (UserForm) session.getAttribute("user");
         List<User> users = userService.findByIdWithDepartmentAndBranch(user.getId());
         User userInfoForm =  users.get(0);
-
         if (userInfoForm.getDepartment().getId() != 1 && userInfoForm.getDepartmentId() != 1) {
             //フラッシュメッセージをセット
-            redirectAttributes.addFlashAttribute("errorMessageForm", "不正なアクセスです");
+            redirectAttributes.addFlashAttribute("errorMessageForm", "無効なアクセスです");
             return new ModelAndView("redirect:/home");
         }
 

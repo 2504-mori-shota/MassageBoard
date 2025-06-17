@@ -62,8 +62,9 @@ public class LoginController {
         //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
       if (userInfo == null || userInfo.getIsStopped() == 1 || !passwordEncoder.matches(userForm.getPassword(), userInfo.getPassword())) {
           //フラッシュメッセージをセット
-          redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
-          return new ModelAndView("redirect:/");
+          model.addAttribute("errorMessageForm", "ログインに失敗しました");
+          model.addAttribute("formModel", userForm);
+          return new ModelAndView("/login");
         }
         session.setAttribute("user", userInfo);
         // rootへリダイレクト
