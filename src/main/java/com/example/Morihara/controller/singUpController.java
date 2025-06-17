@@ -1,7 +1,11 @@
 package com.example.Morihara.controller;
 
 import com.example.Morihara.controller.Form.UserForm;
+import com.example.Morihara.repository.entity.User;
 import com.example.Morihara.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,13 +27,29 @@ import java.util.Map;
 public class singUpController {
     @Autowired
     UserService userService;
-
+    @Autowired
+    HttpSession session;
 
     @GetMapping("/singUp")
-    public ModelAndView newContent() {
+    public ModelAndView newContent(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            RedirectAttributes redirectAttributes,
+            Model model) {
+        session = request.getSession();
+        UserForm user = (UserForm) session.getAttribute("user");
+        List<User> users = userService.findByIdWithDepartmentAndBranch(user.getId());
+        User userInfoForm =  users.get(0);
+
+        if (userInfoForm.getDepartment().getId() != 1 && userInfoForm.getDepartmentId() != 1) {
+            //フラッシュメッセージをセット
+            redirectAttributes.addFlashAttribute("errorMessageForm", "不正なアクセスです");
+            return new ModelAndView("redirect:/home");
+        }
+
+
         ModelAndView mav = new ModelAndView();
         UserForm userForm = new UserForm();
-
         mav.addObject("formModel", userForm);
         //プルダウンで使用
         mav.addObject("branchOptions", getBranchOptions());
