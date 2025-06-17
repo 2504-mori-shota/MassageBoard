@@ -10,8 +10,8 @@
     <h1>ユーザー登録画面</h1>
 </div>
 
-<div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
-    <strong th:text="${errorMessageForm}"></strong>
+<div th:if="${errorMessageForm}" class="alert-error" role="alert">
+    <strong style="color:red;" th:text="${errorMessageForm}"></strong>
 </div>
 
 <div class="main-contents">
@@ -23,11 +23,12 @@
         <div th:if="${#fields.hasErrors('account')}" style="color:red;" th:errors="*{account}"></div>
 
         <label>パスワード<br/>
-            <input type="text" th:field="*{password}" class="form-control"></label><br/>
+            <input type="password" th:field="*{password}" class="form-control"></label><br/>
         <div th:if="${#fields.hasErrors('password')}" style="color:red;" th:errors="*{password}"></div>
 
         <label>パスワード確認<br/>
-            <input type="password" th:field="*{passwordConfirm}" required/></label><br/>
+            <input type="password" th:field="*{passwordConfirm}" />
+        </label><br/>
         <div th:if="${#fields.hasErrors('passwordConfirm')}" style="color:red;" th:errors="*{passwordConfirm}"></div>
 
         <label>氏名<br/>
@@ -53,14 +54,14 @@
             </select>
         </label><br/>
 
-        <form th:action="@{/management}">
-            <button type="submit">よろしくおねがいしまーーーーす！！</button>
-        </form>
-        <form th:action="@{/management}">
-            <button type="submit">戻りまーーーーす！！</button>
-        </form>
 
+        <button type="submit">決定</button>
     </form>
+    <form th:action="@{/management}">
+        <button type="submit">戻る</button>
+    </form>
+
+
 </div>
 </body>
 </html>

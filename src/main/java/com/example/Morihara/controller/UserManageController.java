@@ -1,5 +1,7 @@
 package com.example.Morihara.controller;
 
+import com.example.Morihara.controller.Form.CommentForm;
+import com.example.Morihara.controller.Form.MessageForm;
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.entity.User;
 import com.example.Morihara.service.UserService;
@@ -31,19 +33,26 @@ public class UserManageController {
             RedirectAttributes redirectAttributes,
             Model model) {
         session = request.getSession();
-        UserForm user = (UserForm) session.getAttribute("user");
-        List<User> users = userService.findByIdWithDepartmentAndBranch(user.getId());
-        User userInfoForm =  users.get(0);
-
-        if (userInfoForm.getDepartment().getId() != 1 && userInfoForm.getDepartmentId() != 1) {
+        //　↓はログインユーザのセッションに入っている情報を取得
+        UserForm userForm = (UserForm) session.getAttribute("user");
+        List<User> users = userService.findByIdWithDepartmentAndBranch(userForm.getId());
+        User userInfo =  users.get(0);
+        if (userInfo.getDepartment().getId() != 1 && userInfo.getDepartmentId() != 1) {
             //フラッシュメッセージをセット
-            redirectAttributes.addFlashAttribute("errorMessageForm", "不正なアクセスです");
+            redirectAttributes.addFlashAttribute("errorMessageForm", "無効なアクセスです");
             return new ModelAndView("redirect:/home");
         }
 
         ModelAndView mav = new ModelAndView();
         // 投稿を全件取得
         List<UserForm> userFormList = userService.findByAllUser();
+
+        for (UserForm userRegisterInfo : userFormList) {
+            List<User> userInform = userService.findUserById(userRegisterInfo.getId());
+            User userMember = userInform.get(0);
+            userRegisterInfo.setBranch(userMember.getBranch());
+            userRegisterInfo.setDepartment(userMember.getDepartment());
+        }
         // 画面遷移先を指定
         mav.setViewName("/management");
         // 投稿データオブジェクトを保管

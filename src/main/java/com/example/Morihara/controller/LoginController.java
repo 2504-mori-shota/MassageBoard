@@ -30,12 +30,14 @@ public class LoginController {
 
     @GetMapping
     public ModelAndView login() {
+
         ModelAndView mav = new ModelAndView();
         UserForm userForm = new UserForm();
         // ログインフィルターで書いたエラー文をここで受け取る。
         String errorMessage = (String) session.getAttribute("errorMessageForm");
         //一度だけ表示させるコード
         session.removeAttribute("errorMessageForm");
+        session.invalidate();
         // 画面遷移先を指定
         mav.setViewName("login");
         // 準備した空のFormを保管
@@ -62,8 +64,9 @@ public class LoginController {
         //DBから取得した情報がnullの時またはアカウントが停止中の時にエラーを表示させる
       if (userInfo == null || userInfo.getIsStopped() == 1 || !passwordEncoder.matches(userForm.getPassword(), userInfo.getPassword())) {
           //フラッシュメッセージをセット
-          redirectAttributes.addFlashAttribute("errorMessageForm", "ログインに失敗しました");
-          return new ModelAndView("redirect:/");
+          model.addAttribute("errorMessageForm", "ログインに失敗しました");
+          model.addAttribute("formModel", userForm);
+          return new ModelAndView("/login");
         }
         session.setAttribute("user", userInfo);
         // rootへリダイレクト
