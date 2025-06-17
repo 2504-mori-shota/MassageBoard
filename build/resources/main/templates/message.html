@@ -23,7 +23,7 @@
             <div th:if="${#fields.hasErrors('title')}" style="color:red;" th:errors="*{title}"></div>
 
             <label>カテゴリー　
-                <input type="text" th:field="*{category}" />
+                <input type="text" th:field="*{category}" /><br/>
             </label>
             <div th:if="${#fields.hasErrors('category')}" style="color:red;" th:errors="*{category}"></div>
 
