@@ -94,7 +94,7 @@ public class UserService {
         report.setPassword(encodedPassword);
         report.setName(reqUser.getName());
         report.setBranchId(reqUser.getBranchId());
-        report.setDepartmentId(reqUser.getBranchId());
+        report.setDepartmentId(reqUser.getDepartmentId());
         report.setIsStopped(reqUser.getIsStopped());
         return report;
     }
