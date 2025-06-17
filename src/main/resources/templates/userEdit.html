@@ -27,7 +27,7 @@
         <div th:if="${#fields.hasErrors('password')}" style="color:red;" th:errors="*{password}"></div>
 
         <label>パスワード確認<br/>
-          <input type="password" th:field="*{passwordConfirm}" required/></label><br/>
+          <input type="password" th:field="*{passwordConfirm}"/></label><br/>
         <div th:if="${#fields.hasErrors('passwordConfirm')}" style="color:red;" th:errors="*{passwordConfirm}"></div>
 
         <label>氏名<br/>
