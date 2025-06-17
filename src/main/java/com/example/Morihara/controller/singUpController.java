@@ -83,6 +83,7 @@ public class singUpController {
         }
 
         if (result.hasErrors()) {
+
             model.addAttribute("branchOptions", getBranchOptions());
             model.addAttribute("departmentOptions", getDepartmentOptions());
             return "singUp"; // フォワードで遷移

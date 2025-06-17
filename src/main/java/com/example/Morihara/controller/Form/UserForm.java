@@ -16,7 +16,7 @@ public class UserForm {
     //ユーザー登録とログインする際の、バリデーションがかぶるため、グループ分けをする。
     public interface SingUpGroup {}
     public interface LoginGroup {}
-    public  interface EditGroup{}
+    public interface EditGroup{}
     private int id;
 
     @NotBlank(message = "アカウントを入力してください", groups = {LoginGroup.class, SingUpGroup.class, EditGroup.class})
@@ -32,7 +32,7 @@ public class UserForm {
     private String password;
 
     @Transient // DBにマッピングしない
-    @NotBlank(message = "パスワード確認を入力してください", groups = {SingUpGroup.class, EditGroup.class})
+    @NotBlank(message = "入力したパスワードと確認用パスワードが一致しません", groups = {SingUpGroup.class, EditGroup.class})
     private String passwordConfirm;
 
     @NotBlank(message = "氏名を入力してください", groups = {SingUpGroup.class, EditGroup.class})
