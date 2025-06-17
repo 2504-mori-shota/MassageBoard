@@ -53,7 +53,8 @@
     <div class="action-button">
         <div class="delete-button">
 <!--            th:if="${session.user != null and session.user.id == message.userId}"-->
-            <form th:action="@{/message/delete/{id}(id=${messageInfo.id})}" th:method="post">
+            <form th:action="@{/message/delete/{id}(id=${messageInfo.id})}" th:method="post"
+                  th:if="${session.user != null and session.user.id == messageInfo.userId}">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit" onclick="return confirm('消去しますか？');">消去</button>
             </form>
