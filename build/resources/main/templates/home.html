@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <title>ホーム画面</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="header-contents">
@@ -66,6 +67,18 @@
                 <input type="submit" value="既読"/>
             </form>
         </div>
+<!--        ジャバスクリプト使って、カウントボタン作成。ただ、リロードした際カウント０になるため不採用-->
+<!--        <p>カウンター：<span id="count">0</span></p>-->
+<!--        <input type="button" value="カウント" onClick="count();">-->
+<!--        <script>-->
+<!--        function count(){-->
+<!--        var thisCount = $("#count").html();-->
+<!--        thisCount = Number(thisCount);-->
+<!--        thisCount = thisCount + 1;-->
+<!--        $("#count").html(thisCount);-->
+<!--        }-->
+<!--        </script>-->
+
         <!-- コメント投稿フォーム -->
         <form th:action="@{/addComment}" method="post" th:object="${commentForm}">
             <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>

@@ -70,7 +70,9 @@ public class MessageController {
             mav.addObject("formModel", user);
             return mav;
         }
+        
         messageForm.setUserId(user.getId());
+
         // 投稿をテーブルに格納
         messageService.saveMessage(messageForm);
         // rootへリダイレクト

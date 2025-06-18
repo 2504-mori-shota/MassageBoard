@@ -35,6 +35,11 @@ display: block;
 	height: 100%;
 	width: 80%;
 }
+.read-button {
+    text-align: right;
+ }
+
+
 
 .comment-text {
     white-space: pre-wrap;
