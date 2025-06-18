@@ -35,7 +35,7 @@ display: block;
 	height: 100%;
 	width: 80%;
 }
-.read-button {
+.read-text {
     text-align: right;
  }
 
@@ -66,8 +66,8 @@ display: block;
   cursor: pointer;
 }
 
-.delete-button input[type="submit"]:hover {
-  background-color: #333;
+.read-text input[type="submit"]:hover {
+  background-color: #4ec6e0;
 }
 
 .edit-button input[type="button"] {

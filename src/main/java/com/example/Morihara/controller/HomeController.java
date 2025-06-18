@@ -2,11 +2,13 @@ package com.example.Morihara.controller;
 
 import com.example.Morihara.controller.Form.CommentForm;
 import com.example.Morihara.controller.Form.MessageForm;
+import com.example.Morihara.controller.Form.ReadForm;
 import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.MessageRepository;
 import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.service.CommentService;
 import com.example.Morihara.service.MessageService;
+import com.example.Morihara.service.ReadService;
 import com.example.Morihara.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -40,6 +42,9 @@ public class HomeController {
     CommentService commentService;
 
     @Autowired
+    ReadService readService;
+
+    @Autowired
     HttpSession session;
 
     /*
@@ -58,7 +63,10 @@ public class HomeController {
         List<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category);  // 変数名を統一
         for (MessageForm message : messageList) {
             List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
+            List<ReadForm> reads = readService.findReadByMessageId(message.getId());
+            message.setCount(reads.size());
             message.setComments(comments);
+            message.setReads(reads);
         }
 
         mav.setViewName("/home");

@@ -42,4 +42,10 @@ public class MessageForm {
     private Date updatedDate;
 
     private List<CommentForm> comments;
+
+    private List<ReadForm> reads;
+
+    private UserForm userForm;
+
+    private  int count;
 }
