@@ -46,7 +46,7 @@
         件名 : <span th:text="${messageInfo.title}"/>
         カテゴリー : <span th:text="${messageInfo.category}"/><br/>
 
-        <strong>投稿 :</strong><br/>
+        <strong>投稿</strong><br/>
         <span th:text="${messageInfo.text}" class="wrap-text"/>
 
     </div>
@@ -74,7 +74,7 @@
         </form>
         <!-- コメント表示 -->
         <div class="comments" th:each="comment : ${messageInfo.comments}">
-            <p class="comment-text" th:text="${comment.text}"></p>
+            <strong>コメント</strong><p class="comment-text" th:text="${comment.text}"></p>
 
             <!-- 自分のコメントだけ削除ボタン表示 -->
             <form th:if="${session.user != null and session.user.id == comment.userId}"
