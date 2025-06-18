@@ -28,6 +28,6 @@ public class Read {
     @Column
     private int status;
 
-    @Column
+    @Column(insertable = false, updatable = false)
     private Date readTime;
 }
