@@ -20,9 +20,7 @@ public class ReadController {
     @PostMapping("/read")
     public String read (ReadForm read, RedirectAttributes redirectAttributes) {
         // アカウント重複チェック
-        if (readService.UserIdDuB(read.getUserId()) && readService.MessageIdDuB(read.getMessageId())) {
-           // result.rejectValue("reRead", "duplicate", "既読にしています");
-            //redirectAttributes.addFlashAttribute("readMessageForm", "既読にしています");
+        if ((!readService.UserIdDuB(read.getUserId(), read.getMessageId())) && (!readService.MessageIdDuB(read.getMessageId(), read.getUserId()))) {
             return "redirect:/home";
         }
         readService.saveReadForm(read);
