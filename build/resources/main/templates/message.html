@@ -31,7 +31,6 @@
             <textarea class="tweet-box" th:field="*{text}"></textarea><br/>
             <div th:if="${#fields.hasErrors('text')}" style="color:red;" th:errors="*{text}"></div>
 
-            <input type="hidden" th:field="*{userId}" th:value="${formModel.id}" />
 
             <input type="submit" value="投稿" />
         </div>
