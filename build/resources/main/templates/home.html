@@ -42,9 +42,9 @@
 
 <div class="message-icon" th:each="messageInfo : ${messages}">
     <div class="text">
-        Id : <span th:text="${messageInfo.id}"/>
-        件名 : <span th:text="${messageInfo.title}"/>
-        カテゴリー : <span th:text="${messageInfo.category}"/><br/>
+        <strong>Id :</strong> <span th:text="${messageInfo.id}"/>
+        <strong>件名 :</strong> <span th:text="${messageInfo.title}"/>
+        <strong>カテゴリー :</strong> <span th:text="${messageInfo.category}"/><br/>
 
         <strong>投稿 :</strong><br/>
         <span th:text="${messageInfo.text}" class="wrap-text"/>
@@ -57,6 +57,26 @@
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit" onclick="return confirm('消去しますか？');">消去</button>
             </form>
+        </div>
+        <!--既読未読機能-->
+        <div class="read-button">
+          <div th:each="read : ${messageInfo.reads}">
+              <p th:if="${read.userId == session.user.id}"  style="color:red">
+                  既読済み
+              </p>
+          </div>
+                <form th:action="@{/read}" th:method="post"
+                th:if="${session.user.id != messageInfo.userId || messageInfo.reads == null}" >
+                    <input type="hidden" name="userId" th:value="${session.user.id}"/>
+                    <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>
+                    <input type="submit" value="既読にする"/>
+                </form>
+
+            <div class="mouse">  既読数　　:　<span class="wrap-text" th:text="${messageInfo.count}"></span><br/>
+                <div class="word" >
+                    既読済アカウント<p th:each="read : ${messageInfo.reads}"th:text="${read.account}"></p>
+                </div>
+            </div>
         </div>
         <!-- コメント投稿フォーム -->
         <form th:action="@{/addComment}" method="post" th:object="${commentForm}">
