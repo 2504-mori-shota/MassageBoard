@@ -109,7 +109,11 @@ public class UserEditController {
                 !userForm.getPassword().equals(userForm.getPasswordConfirm())) {
             result.rejectValue("passwordConfirm", null, "パスワードとパスワード確認が一致しません");
         }
-
+        UserForm userPass = userService.findByAccount(userForm.getAccount());
+        // アカウント重複チェック
+        if (userPass.getId() != userForm.getId()) {
+            result.rejectValue("account", "duplicate", "アカウントが重複しています");
+        }
 
         // 支社と部署の組み合わせチェック
         if (!userService.BranchDepartmentComb(userForm.getBranchId(), userForm.getDepartmentId())) {
@@ -124,7 +128,7 @@ public class UserEditController {
 
 
         if (!userForm.getPassword().isBlank() &&!userForm.getPassword().matches("^[a-zA-Z]+$")){
-            result.rejectValue("password", "duplicate","アカウントは半角かつ6文字以上20文字以内で入力してください");
+            result.rejectValue("password", "duplicate","パスワードは半角かつ6文字以上20文字以内で入力してください");
         }
 
         if((!userForm.getPassword().isBlank() && userForm.getPassword().length() < 6) || userForm.getPassword().length() > 20){
@@ -137,12 +141,9 @@ public class UserEditController {
             return "userEdit"; // フォワードで遷移
         }
 
+    userForm.setPassword(userPass.getPassword());
 
-
-        UserForm userPass = userService.findByAccount(userForm.getAccount());
-
-
-        userService.saveUser(userPass);
+        userService.saveUser(userForm);
         return "redirect:/management";
     }
 }
