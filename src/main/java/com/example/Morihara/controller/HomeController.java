@@ -56,21 +56,36 @@ public class HomeController {
             @RequestParam(name = "startDate", required = false) String startDate,
             @RequestParam(name = "endDate", required = false) String endDate,
             @RequestParam(name = "category", required = false) String category,
+            HttpServletRequest request,
             RedirectAttributes redirectAttributes,
             Model model) throws ParseException {
         ModelAndView mav = new ModelAndView();
+
+        session = request.getSession();
 
         List<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category);  // 変数名を統一
         for (MessageForm message : messageList) {
             List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
             //MessageFormにList<ReadForm>をいれないと既読数が獲得できない
-            // ＋
-            //
             List<ReadForm> reads = readService.findReadByMessageId(message.getId());
+
+
             message.setCount(reads.size());
-            message.setComments(comments);
+            for(int i = 0; i < reads.size(); i++ ){
+
+                ReadForm read = reads.get(i);
+                UserForm userForm = userService.findById(read.getUserId());
+                read.setAccount(userForm.getAccount());
+            }
             message.setReads(reads);
+            message.setComments(comments);
+
+            if(reads.isEmpty()) {
+                message.setReads(null);
+            }
         }
+
+
 
         mav.setViewName("/home");
         mav.addObject("messages", messageList);
