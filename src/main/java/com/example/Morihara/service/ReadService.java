@@ -35,7 +35,7 @@ public class ReadService {
 
         return read;
     }
-
+    //HomeController
     public List<ReadForm> findReadByMessageId(int messageId){
         List<Read> results = readRepository.findByMessageId(messageId);
         return setReadForm(results);
@@ -58,12 +58,32 @@ public class ReadService {
         return reads;
     }
 
-    public  boolean UserIdDuB(int userId) {
+    public  boolean UserIdDuB(int userId, int messageId) {
         List<Read> results = readRepository.findByUserId(userId);
-        return !results.isEmpty();
+        if (results.isEmpty()) {
+            return true;
+        }
+
+        for (int i = 0; i < results.size(); i++){
+            Read read = results.get(i);
+            if(messageId == read.getMessageId()) {
+                return false;
+            }
+        }
+        return true;
     }
-    public boolean MessageIdDuB(int messageId) {
+    public boolean MessageIdDuB(int messageId, int userId) {
         List<Read> results = readRepository.findByMessageId(messageId);
-        return !results.isEmpty();
+        if (results.isEmpty()) {
+            return true;
+        }
+
+        for (int i = 0; i < results.size(); i++){
+            Read read = results.get(i);
+            if(userId == read.getUserId()) {
+                return false;
+            }
+        }
+        return true;
     }
 }
