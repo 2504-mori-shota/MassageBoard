@@ -22,6 +22,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.text.ParseException;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class MessageController {
@@ -60,7 +62,7 @@ public class MessageController {
             @Valid
             @ModelAttribute("messageInfo") MessageForm messageForm,
             BindingResult result,
-    Model model
+            Model model
     ) throws ParseException {
         session = request.getSession();
         UserForm user = (UserForm) session.getAttribute("user"); // セッションから再取得
@@ -70,7 +72,22 @@ public class MessageController {
             mav.addObject("formModel", user);
             return mav;
         }
-        
+        //NGワードの条件式
+        ModelAndView mav = new ModelAndView("message");
+        String str = messageForm.getText();
+
+        List<String> ngWords = Arrays.asList("死", "殺", "バカ");
+
+        //「：」は、ngWordsの中身を一つずつ取り出して、wordに入れる処理
+        for (String word : ngWords) {
+            if (str.contains(word)) {
+                result.rejectValue("text", "errorMessage", "不正なワードが含まれています");
+                mav.addObject("messageInfo", messageForm);
+                mav.addObject("formModel", user);
+                return mav;
+            }
+        }
+
         messageForm.setUserId(user.getId());
 
         // 投稿をテーブルに格納

@@ -60,17 +60,25 @@
             </form>
         </div>
         <!--既読未読機能-->
+
         <div class="read-text">
+
+          <div th:each="read : ${messageInfo.reads}">
+              <p th:if="${read.userId == session.user.id}"  style="color:red">
+                  既読済み
+              </p>
+          </div>
+
                 <form th:action="@{/read}" th:method="post"
                 th:if="${session.user.id != messageInfo.userId}" >
-                   <!-- <div th:if="${readMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
-                        <strong th:text="${readMessageForm}"></strong>
-                    </div>-->
                     <input type="hidden" name="userId" th:value="${session.user.id}"/>
                     <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>
-                    <input type="submit" value="既読にする"/>
+                    <input type="submit" value="既読にする" />
+
                 </form>
+
             <p>  既読数　　:　<span class="read-text" th:text="${messageInfo.count}"></span></p><br/>
+
 
         </div>
 <!--        ジャバスクリプト使って、カウントボタン作成。ただ、リロードした際カウント０になるため不採用-->
