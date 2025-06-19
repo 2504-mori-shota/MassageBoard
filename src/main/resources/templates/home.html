@@ -66,13 +66,17 @@
               </p>
           </div>
                 <form th:action="@{/read}" th:method="post"
-                th:if="${session.user.id != messageInfo.userId}" >
+                th:if="${session.user.id != messageInfo.userId || messageInfo.reads == null}" >
                     <input type="hidden" name="userId" th:value="${session.user.id}"/>
                     <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>
                     <input type="submit" value="既読にする"/>
                 </form>
-            <p>  既読数　　:　<span class="wrap-text" th:text="${messageInfo.count}"></span></p><br/>
 
+            <div class="mouse">  既読数　　:　<span class="wrap-text" th:text="${messageInfo.count}"></span><br/>
+                <div class="word" >
+                    既読済アカウント<p th:each="read : ${messageInfo.reads}"th:text="${read.account}"></p>
+                </div>
+            </div>
         </div>
         <!-- コメント投稿フォーム -->
         <form th:action="@{/addComment}" method="post" th:object="${commentForm}">

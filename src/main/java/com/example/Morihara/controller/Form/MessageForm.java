@@ -42,7 +42,7 @@ public class MessageForm {
 
     private List<ReadForm> reads;
 
-    private UserForm userForm;
-
     private  int count;
+
+
 }
