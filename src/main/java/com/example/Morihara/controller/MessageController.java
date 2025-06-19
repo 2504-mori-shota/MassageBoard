@@ -68,7 +68,7 @@ public class MessageController {
         UserForm user = (UserForm) session.getAttribute("user"); // セッションから再取得
 
         //NGワードの条件式
-        List<String> ngWords = Arrays.asList("死", "殺", "バカ");
+        List<String> ngWords = Arrays.asList("死", "殺", "バカ","よこすか");
 
         //「：」は、ngWordsの中身を一つずつ取り出して、wordに入れる処理
         for (String word : ngWords) {

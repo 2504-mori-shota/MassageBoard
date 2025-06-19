@@ -15,8 +15,6 @@ public class ReadForm {
     private int status;
     private Date readTime;
 
-    private UserForm userForm;
-
     private String account;
 
 }
