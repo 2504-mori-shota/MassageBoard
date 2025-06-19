@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <link th:href="@{/css/style.css}" rel="stylesheet">
     <title>ホーム画面</title>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <div class="header-contents">
@@ -43,11 +42,11 @@
 
 <div class="message-icon" th:each="messageInfo : ${messages}">
     <div class="text">
-        <strong>Id :  </strong> <span th:text="${messageInfo.id}"/>
-        <strong>件名 :  </strong> <span th:text="${messageInfo.title}"/>
-        <strong>カテゴリー :  </strong> <span th:text="${messageInfo.category}"/><br/>
+        <strong>Id :</strong> <span th:text="${messageInfo.id}"/>
+        <strong>件名 :</strong> <span th:text="${messageInfo.title}"/>
+        <strong>カテゴリー :</strong> <span th:text="${messageInfo.category}"/><br/>
 
-        <strong>投稿</strong><br/>
+        <strong>投稿 :</strong><br/>
         <span th:text="${messageInfo.text}" class="wrap-text"/>
 
     </div>
@@ -60,39 +59,25 @@
             </form>
         </div>
         <!--既読未読機能-->
-
-        <div class="read-text">
-
+        <div class="read-button">
           <div th:each="read : ${messageInfo.reads}">
               <p th:if="${read.userId == session.user.id}"  style="color:red">
                   既読済み
               </p>
           </div>
-
                 <form th:action="@{/read}" th:method="post"
-                th:if="${session.user.id != messageInfo.userId}" >
+                th:if="${session.user.id != messageInfo.userId || messageInfo.reads == null}" >
                     <input type="hidden" name="userId" th:value="${session.user.id}"/>
                     <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>
-                    <input type="submit" value="既読にする" />
-
+                    <input type="submit" value="既読にする"/>
                 </form>
 
-            <p>  既読数　　:　<span class="read-text" th:text="${messageInfo.count}"></span></p><br/>
-
-
+            <div class="mouse">  既読数　　:　<span class="wrap-text" th:text="${messageInfo.count}"></span><br/>
+                <div class="word" >
+                    既読済アカウント<p th:each="read : ${messageInfo.reads}"th:text="${read.account}"></p>
+                </div>
+            </div>
         </div>
-<!--        ジャバスクリプト使って、カウントボタン作成。ただ、リロードした際カウント０になるため不採用-->
-<!--        <p>カウンター：<span id="count">0</span></p>-->
-<!--        <input type="button" value="カウント" onClick="count();">-->
-<!--        <script>-->
-<!--        function count(){-->
-<!--        var thisCount = $("#count").html();-->
-<!--        thisCount = Number(thisCount);-->
-<!--        thisCount = thisCount + 1;-->
-<!--        $("#count").html(thisCount);-->
-<!--        }-->
-<!--        </script>-->
-
         <!-- コメント投稿フォーム -->
         <form th:action="@{/addComment}" method="post" th:object="${commentForm}">
             <input type="hidden" name="messageId" th:value="${messageInfo.id}"/>
@@ -109,7 +94,7 @@
         </form>
         <!-- コメント表示 -->
         <div class="comments" th:each="comment : ${messageInfo.comments}">
-            <strong>コメント</strong><p class="comment-text" th:text="${comment.text}"></p>
+            <p class="comment-text" th:text="${comment.text}"></p>
 
             <!-- 自分のコメントだけ削除ボタン表示 -->
             <form th:if="${session.user != null and session.user.id == comment.userId}"
