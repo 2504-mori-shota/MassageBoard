@@ -27,7 +27,7 @@
         <td>  支社　:　<span class="wrap-text" th:text="${user.branch.branchName}"></span></td><br/>
         <td>部署　：　<span class="wrap-text" th:text="${user.department.departmentName}"></span></td><br/>
 
-          <form th:action="@{/updateStatus}" th:method="post">
+          <form th:action="@{/updateStatus}" th:method="post" th:if="${session.user.id != user.id}">
             <input type="hidden" name="id" th:value="${user.id}" />
             <select name="status">
             <option th:each="status : ${statuses}"

@@ -1,13 +1,12 @@
 package com.example.Morihara.controller.Form;
 
-import com.example.Morihara.service.MessageService;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+
 
 import java.util.Date;
 import java.util.List;
@@ -26,8 +25,6 @@ public class MessageForm {
     @NotBlank(message = "本文を入力してください")
     @Pattern(regexp = "^(?!　*$).*$", message = "本文を入力してください")
     @Size(max = 1000, message = "本文は1000文字以内で入力してください")
-    //@Pattern(regexp = "^[あ-んー]*$", message = "ひらがなで入力してください")
-
     private  String text;
 
 
@@ -43,6 +40,8 @@ public class MessageForm {
 
     private Date createdDate;
     private Date updatedDate;
+
+    private List<UserForm> users;
 
     private List<CommentForm> comments;
 

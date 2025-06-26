@@ -57,11 +57,13 @@ public class HomeController {
 
         List<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category);  // 変数名を統一
         for (MessageForm message : messageList) {
+            List<UserForm> users = userService.findUserById(message.getUserId());
+
             List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
             //MessageFormにList<ReadForm>をいれないと既読数が獲得できない
             List<ReadForm> reads = readService.findReadByMessageId(message.getId());
 
-
+            message.setUsers(users);
             message.setCount(reads.size());
             for(int i = 0; i < reads.size(); i++ ){
 

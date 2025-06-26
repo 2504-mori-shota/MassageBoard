@@ -48,8 +48,8 @@ public class UserManageController {
         List<UserForm> userFormList = userService.findByAllUser();
 
         for (UserForm userRegisterInfo : userFormList) {
-            List<User> userInform = userService.findUserById(userRegisterInfo.getId());
-            User userMember = userInform.get(0);
+            List<UserForm> userInform = userService.findUserById(userRegisterInfo.getId());
+            UserForm userMember = userInform.get(0);
             userRegisterInfo.setBranch(userMember.getBranch());
             userRegisterInfo.setDepartment(userMember.getDepartment());
         }
