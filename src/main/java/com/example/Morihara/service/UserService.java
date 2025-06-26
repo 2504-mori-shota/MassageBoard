@@ -35,16 +35,18 @@ public class UserService {
 
     //支店と部署の組み合わせチェック。
     public boolean BranchDepartmentComb(Integer branchId, Integer departmentId){
-        //有効な組み合わせを力技解決
-        Map<Integer, List<Integer>> Comb = new HashMap<>();
-        Comb.put(1, List.of(1, 2));//本社、
-        Comb.put(2, List.of(3, 4));//A支社,
-        Comb.put(3, List.of(3, 4));
-        Comb.put(4, List.of(3, 4));
+        //branchIdを１以外かどうかでif文にかけ、departmentIdは３以上か以下かでif文でふるいにかける
+        //もし本社（branchId=1）に新しく部署ができた場合は↓にそれぞれ書き換える
+        // if(branchId == 1 && (departmentId < 3 || departmentId == ${新しい部署のId}))
+        // if(branchId != 1 && (departmentId >= 3 && departmentId != ${新しい部署のId}))
+      if(branchId == 1 && departmentId < 3){
+          return true;
+      }
+      if(branchId != 1 && departmentId >= 3){
+        return true;
+      }
 
-        List<Integer> a = Comb.get(branchId);
-        return a != null && a.contains(departmentId);
-
+      return false;
     }
 
     public List<Branch> findAllBranch(){
@@ -61,8 +63,11 @@ public class UserService {
 
     }
 
-    public List<User> findUserById(int id){
-        return userRepository.findByIdWithDepartmentAndBranch(id);
+    public List<UserForm> findUserById(int id){
+
+        List<User> results = userRepository.findByIdWithDepartmentAndBranch(id);
+        List<UserForm> users = setUserForm(results);
+        return users;
     }
 
     public UserForm findByAccount(String account){
