@@ -4,8 +4,6 @@ import com.example.Morihara.controller.Form.CommentForm;
 import com.example.Morihara.controller.Form.MessageForm;
 import com.example.Morihara.controller.Form.ReadForm;
 import com.example.Morihara.controller.Form.UserForm;
-import com.example.Morihara.repository.MessageRepository;
-import com.example.Morihara.repository.UserRepository;
 import com.example.Morihara.service.CommentService;
 import com.example.Morihara.service.MessageService;
 import com.example.Morihara.service.ReadService;
@@ -28,12 +26,6 @@ public class HomeController {
 
     @Autowired
     UserService userService;
-
-    @Autowired
-    UserRepository userRepository;
-
-    @Autowired
-    MessageRepository messageRepository;
 
     @Autowired
     MessageService messageService;

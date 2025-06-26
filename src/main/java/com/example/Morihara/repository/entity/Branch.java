@@ -28,6 +28,4 @@ public class Branch {
     @Column(insertable = false)
     private Date updatedDate;
 
-    //@OneToMany(mappedBy = "branch")
-    //private List<User> users;
 }

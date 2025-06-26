@@ -1,12 +1,15 @@
 package com.example.Morihara.service;
 
 import com.example.Morihara.controller.Form.UserForm;
+import com.example.Morihara.repository.BranchRepository;
+import com.example.Morihara.repository.DepartmentRepository;
 import com.example.Morihara.repository.UserRepository;
+import com.example.Morihara.repository.entity.Branch;
+import com.example.Morihara.repository.entity.Department;
 import com.example.Morihara.repository.entity.User;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,10 @@ public class UserService {
     private final UserRepository userRepository;
     @Autowired
     PasswordEncoder passwordEncoder;
+    @Autowired
+    BranchRepository branchRepository;
+    @Autowired
+    DepartmentRepository departmentRepository;
 
     //アカウント重複チェック用
     public boolean AccountDuB(String account) {
@@ -38,6 +45,13 @@ public class UserService {
         List<Integer> a = Comb.get(branchId);
         return a != null && a.contains(departmentId);
 
+    }
+
+    public List<Branch> findAllBranch(){
+        return branchRepository.findAll();
+    }
+    public List<Department> findAllDepartment(){
+        return departmentRepository.findAll();
     }
 
     public List<UserForm>  findByAllUser(){

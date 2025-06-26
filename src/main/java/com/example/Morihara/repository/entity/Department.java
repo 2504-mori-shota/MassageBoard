@@ -27,6 +27,4 @@ public class Department {
     @Column(insertable = false)
     private Date updatedDate;
 
-    //@OneToMany(mappedBy = "department")
-    //private List<User> users;
 }

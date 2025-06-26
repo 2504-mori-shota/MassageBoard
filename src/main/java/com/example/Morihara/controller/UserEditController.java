@@ -1,6 +1,8 @@
 package com.example.Morihara.controller;
 
 import com.example.Morihara.controller.Form.UserForm;
+import com.example.Morihara.repository.entity.Branch;
+import com.example.Morihara.repository.entity.Department;
 import com.example.Morihara.repository.entity.User;
 import com.example.Morihara.service.UserService;
 import io.micrometer.common.util.StringUtils;
@@ -81,20 +83,38 @@ public class UserEditController {
 
     // コントローラー内に選択肢を返すメソッド プルダウンで使用
     private Map<Integer, String> getBranchOptions() {
+        List<Branch> branches = userService.findAllBranch();
         Map<Integer, String> options = new LinkedHashMap<>();
-        options.put(1, "本社");
-        options.put(2, "A支社");
-        options.put(3, "B支社");
-        options.put(4, "C支社");
+        //↓ソースコードべた書き解消
+        for(int i = 0; i < branches.size(); i++ ){
+            Branch branch = branches.get(i);
+
+            String name = branch.getBranchName();
+            options.put(i+1, name);
+        }
+        //↓ソースコードにべた書き
+//        options.put(1, "本社");
+//        options.put(2, "A支社");
+//        options.put(3, "B支社");
+//        options.put(4, "C支社");
         return options;
     }
 
     private Map<Integer, String> getDepartmentOptions() {
+        List<Department> departments = userService.findAllDepartment();
         Map<Integer, String> options = new LinkedHashMap<>();
-        options.put(1, "総務人事部");
-        options.put(2, "情報管理部");
-        options.put(3, "営業部");
-        options.put(4, "技術部");
+        //↓ソースコードべた書き解消
+        for(int i = 0; i < departments.size(); i++ ){
+            Department department = departments.get(i);
+
+            String name = department.getDepartmentName();
+            options.put(i+1, name);
+        }
+        //↓ソースコードにべた書き
+//        options.put(1, "総務人事部");
+//        options.put(2, "情報管理部");
+//        options.put(3, "営業部");
+//        options.put(4, "技術部");
         return options;
     }
 
@@ -111,7 +131,7 @@ public class UserEditController {
         }
         UserForm userPass = userService.findByAccount(userForm.getAccount());
         // アカウント重複チェック
-        if (userPass.getId() != userForm.getId()) {
+        if ((userPass != null) && (userPass.getId() != userForm.getId())) {
             result.rejectValue("account", "duplicate", "アカウントが重複しています");
         }
 
@@ -141,7 +161,7 @@ public class UserEditController {
             return "userEdit"; // フォワードで遷移
         }
 
-    userForm.setPassword(userPass.getPassword());
+        userForm.setPassword(userPass.getPassword());
 
         userService.saveUser(userForm);
         return "redirect:/management";

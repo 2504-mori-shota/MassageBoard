@@ -34,25 +34,26 @@
           <input type="text" th:field="*{name}" class="form-control"></label><br/>
         <div th:if="${#fields.hasErrors('name')}" style="color:red;" th:errors="*{name}"></div>
 
-        <label>支社<br/>
-          <select th:field="*{branchId}" class="form-control">
-            <option value="" disabled selected>選択してください</option>
-            <option th:each="entry : ${branchOptions}"
-                    th:value="${entry.key}"
-                    th:text="${entry.value}"></option>
-          </select>
-        </label><br/>
-        <div th:if="${#fields.hasErrors('branchId')}" style="color:red;" th:errors="*{branchId}"></div>
+        <div th:if="${formModel.id != session.user.id}">
+          <label>支社<br/>
+            <select th:field="*{branchId}" class="form-control">
+              <option value="" disabled selected>選択してください</option>
+              <option th:each="entry : ${branchOptions}"
+                      th:value="${entry.key}"
+                      th:text="${entry.value}"></option>
+            </select>
+          </label><br/>
+          <div th:if="${#fields.hasErrors('branchId')}" style="color:red;" th:errors="*{branchId}"></div>
 
-        <label>部署<br/>
-          <select th:field="*{departmentId}" class="form-control">
-            <option value="" disabled selected>選択してください</option>
-            <option th:each="entry : ${departmentOptions}"
-                    th:value="${entry.key}"
-                    th:text="${entry.value}"></option>
-          </select>
-        </label><br/>
-
+          <label>部署<br/>
+            <select th:field="*{departmentId}" class="form-control">
+              <option value="" disabled selected>選択してください</option>
+              <option th:each="entry : ${departmentOptions}"
+                      th:value="${entry.key}"
+                      th:text="${entry.value}"></option>
+            </select>
+          </label><br/>
+        </div>
         <form th:action="@{/update}">
           <input th:type="hidden" name="id" th:value="${formModel.id}">
           <button type="submit">変更</button>
