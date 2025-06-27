@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -67,8 +69,15 @@ public class LoginController {
           model.addAttribute("formModel", userForm);
           return new ModelAndView("/login");
         }
-        session.setAttribute("user", userInfo);
+      //htmlに直接${#dates.format(#dates.createNow(), 'yyyy/MM/dd HH:mm:ss')}を書いてしまうと画面遷移するたびに時刻が更新されてしまう。
+      //最終ログイン日時はログインした時のその時の時刻をセッションに持たせることでログイン日時は固定することができる。
+      DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss.SSS");
+      LocalDateTime nowDate = LocalDateTime.now();
+      String lastLogin = dtf.format(nowDate);
+      userInfo.setLastLogin(lastLogin);
+
+      session.setAttribute("user", userInfo);
         // rootへリダイレクト
-        return new ModelAndView("redirect:/home");
+      return new ModelAndView("redirect:/home");
     }
 }

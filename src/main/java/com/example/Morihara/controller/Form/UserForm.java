@@ -52,4 +52,6 @@ public class UserForm {
     private Department department;
 
     private Branch branch;
+
+    private String lastLogin;
 }
