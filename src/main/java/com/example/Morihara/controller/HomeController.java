@@ -11,6 +11,9 @@ import com.example.Morihara.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -48,29 +51,34 @@ public class HomeController {
             @RequestParam(name = "startDate", required = false) String startDate,
             @RequestParam(name = "endDate", required = false) String endDate,
             @RequestParam(name = "category", required = false) String category,
-            HttpServletRequest request,
-            RedirectAttributes redirectAttributes,
-            Model model) throws ParseException {
+            @PageableDefault(page = 0, size = 5)
+            Pageable pageable,
+            Model model,
+            HttpServletRequest request
+            ) throws ParseException {
         ModelAndView mav = new ModelAndView();
 
         session = request.getSession();
 
-        List<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category);  // 変数名を統一
+        Page<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category, pageable);
+        // 変数名を統一
         for (MessageForm message : messageList) {
-            List<UserForm> users = userService.findUserById(message.getUserId());
 
+            List<UserForm> users = userService.findUserById(message.getUserId());
             List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
             //MessageFormにList<ReadForm>をいれないと既読数が獲得できない
             List<ReadForm> reads = readService.findReadByMessageId(message.getId());
 
             message.setUsers(users);
             message.setCount(reads.size());
+
             for(int i = 0; i < reads.size(); i++ ){
 
                 ReadForm read = reads.get(i);
                 UserForm userForm = userService.findById(read.getUserId());
                 read.setAccount(userForm.getAccount());
             }
+
             message.setReads(reads);
             message.setComments(comments);
 
@@ -78,7 +86,6 @@ public class HomeController {
                 message.setReads(null);
             }
         }
-
 
 
         mav.setViewName("/home");

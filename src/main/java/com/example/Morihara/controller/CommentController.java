@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -46,14 +48,15 @@ public class CommentController {
             @Valid @ModelAttribute CommentForm commentForm,
             BindingResult result,
             HttpServletRequest request,
-            Model model
+            Model model,
+            Pageable pagenable
 
     ) throws ParseException {
         if (result.hasErrors()) {
             ModelAndView mav = new ModelAndView();
 
             // homeで必要な投稿一覧を取得
-            List<MessageForm> messageList = messageService.findByMessages(null, null, null);
+            Page<MessageForm> messageList = messageService.findByMessages(null, null, null, pagenable);
             for (MessageForm message : messageList) {
                 List<CommentForm> comments = commentService.findCommentsByMessageId(message.getId());
                 message.setComments(comments);

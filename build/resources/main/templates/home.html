@@ -11,7 +11,7 @@
             <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
                 <strong th:text="${errorMessageForm}"></strong>
             </div>
-            <p>本日の日付: <span th:text="${#dates.format(#dates.createNow(), 'yyyy/MM/dd')}"></span></p>
+            <p>最終ログイン日時: <span th:text="${session.user.lastLogin}"></span></p>
         </div>
         <form th:action="@{/logout}" class="logAut">
             <button type="submit">ログアウト</button>
@@ -112,5 +112,22 @@
                 </div>
             </div>
         </div>
+            <div class="pagination">
+               <ul>
+                   <li th:if="${messages.hasPrevious()}">
+                       <a th:href="@{/home(page=${messages.number - 1})}">前へ</a>
+                   </li>
+
+                   <li th:each="i : ${#numbers.sequence(0, messages.totalPages - 1)}"
+                       th:classappend="${i} == ${messages.number} ? 'active'">
+                       <a th:href="@{/home(page=${i})}" th:text="${i + 1}">1</a>
+                   </li>
+
+                   <li th:if="${messages.hasNext()}">
+                       <a th:href="@{/home(page=${messages.number + 1})}">次へ</a>
+                   </li>
+               </ul>
+            </div>
+
     </body>
 </html>

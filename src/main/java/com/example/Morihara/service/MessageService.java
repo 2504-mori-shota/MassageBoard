@@ -8,6 +8,9 @@ import com.example.Morihara.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
@@ -37,7 +40,7 @@ public class MessageService {
         message.setUpdatedDate(reqMessage.getUpdatedDate());
         return message;
     }
-    public List<MessageForm> findByMessages(String startDate, String endDate, String category) throws ParseException {
+    public Page<MessageForm> findByMessages(String startDate, String endDate, String category, Pageable pageable) throws ParseException {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String StrStartDate = "2020-01-01 00:00:00";
         String StrEndDate = "2100-12-31 23:59:59";
@@ -53,21 +56,21 @@ public class MessageService {
         Date EndDate = df.parse(StrEndDate);
 
         if(StringUtils.isBlank(category)){
-            List<Message> results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(StrDate, EndDate);
+            Page<Message> results = messageRepository.findByCreatedDateBetweenOrderByCreatedDateDesc(StrDate, EndDate, pageable);
             return setMessageForm(results);
         } else {
-            List<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryContainingOrderByCreatedDateDesc(StrDate, EndDate, category);
+            Page<Message> results = messageRepository.findByCreatedDateBetweenAndCategoryContainingOrderByCreatedDateDesc(StrDate, EndDate, category, pageable);
             return setMessageForm(results);
         }
 
 
     }
-    private List<MessageForm> setMessageForm(List<Message> results) {
+    private Page<MessageForm> setMessageForm(Page<Message> results) {
         List<MessageForm> messages = new ArrayList<>();
-
-        for (int i = 0; i < results.size(); i++) {
+        //int i = 0; i < results.size(); i++
+        for (Message result : results.getContent()) {
             MessageForm message = new MessageForm();
-            Message result = results.get(i);
+           // Message result = results.get(i);
             message.setId(result.getId());
             message.setTitle(result.getTitle());
             message.setText(result.getText());
@@ -77,8 +80,13 @@ public class MessageService {
             message.setUpdatedDate(result.getUpdatedDate());
             messages.add(message);
         }
-        return messages;
+//        int start = (int) pageable.getOffset();
+//        int end = Math.min((start + pageable.getPageSize()), messages.size());
+//        List<MessageForm> pageContent = messages.subList(start, end);
+        return new PageImpl<>(messages, results.getPageable(), results.getTotalElements());
     }
+
+
     public void deleteMessage(Integer id){
         messageRepository.deleteById(id);
     }
