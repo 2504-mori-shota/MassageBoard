@@ -42,6 +42,7 @@
 
         <div class="message-icon" th:each="messageInfo : ${messages}">
             <div class="text">
+                <strong>投稿日時 :<span th:text="${#dates.format(messageInfo.createdDate, 'yyyy/MM/dd HH:mm:ss')}"/></strong><br/>
                 <strong>Id :</strong> <span th:text="${messageInfo.id}"/>
                 <strong>件名 :</strong> <span th:text="${messageInfo.title}"/>
                 <strong>カテゴリ :</strong> <span th:text="${messageInfo.category}"/><br/>
