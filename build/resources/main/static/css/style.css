@@ -15,12 +15,12 @@ body {
 	width: 80%;
 }
 .main-contents1 {
-	margin: 20px;
+	margin: 50px;
 	padding: 10px 10px 5px 10px;
 	    text-align:  center;        /* 中央寄せ */
         background-color:  #ddd;    /* 背景色指定 */
-	height: 100%;
-	width: 80%;
+	height: 50%;
+	width: 50%;
 }
 .logAut {
 display: block;
@@ -139,12 +139,12 @@ display: block;
 .commentEdit-button input[type="button"]:hover {
   background-color: #34b0ca;
 }
-
+/*ログイン画面css*/
 .form-holder {
-			border-radius: 15px;
+			border-radius: 30px;
 			background-color: #fff;
 			overflow: hidden;
-			margin-top: 50px;
+			margin-top: 500px;
 			opacity: 1;
 			visibility: visible;
 			-webkit-transition: all .3s ease;
@@ -158,7 +158,7 @@ display: block;
 				line-height: 30px;
 				padding: 8px 15px;
 				border-bottom: 1px solid #eee;
-				width: 100%;
+				width: 50%;
 				font-size: 12px;
 
 				&:last-child {
@@ -178,7 +178,7 @@ display: block;
         			display: block;
         			margin: 15px auto;
         			padding: 15px 45px;
-        			width: 100%;
+        			width: 15%;
         			font-size: 13px;
         			font-weight: bold;
         			cursor: pointer;
