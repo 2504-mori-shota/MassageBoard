@@ -52,6 +52,7 @@ public class HomeController {
             @RequestParam(name = "endDate", required = false) String endDate,
             @RequestParam(name = "category", required = false) String category,
             @PageableDefault(page = 0, size = 5)
+            //Pageableはページ番号とページサイズを保持するためのクラス
             Pageable pageable,
             Model model,
             HttpServletRequest request
@@ -59,7 +60,7 @@ public class HomeController {
         ModelAndView mav = new ModelAndView();
 
         session = request.getSession();
-
+        //Page型はWebサイトなどで、大量の情報をページに分割して表示する方式
         Page<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category, pageable);
         // 変数名を統一
         for (MessageForm message : messageList) {

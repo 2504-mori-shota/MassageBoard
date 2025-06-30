@@ -7,27 +7,26 @@
     </head>
     <body>
         <div class="header-contents">
-            <h1>ホーム画面</h1>
+            <h1>-HOME-</h1>
             <div th:if="${errorMessageForm}" class="alert alert-error alert-dismissible fade show" role="alert">
                 <strong th:text="${errorMessageForm}"></strong>
             </div>
-            <p>最終ログイン日時: <span th:text="${session.user.lastLogin}"></span></p>
+            <p class="login-time">最終ログイン日時: <span th:text="${session.user.lastLogin}"></span></p>
         </div>
-        <form th:action="@{/logout}" class="logAut">
-            <button type="submit">ログアウト</button>
-        </form>
-        <!--and session.user.departmentId == session.user.department.id == 1 session.user.branch.id -->
-        <form th:action="@{/management}" th:method="get" th:object="${user}"
-              th:if="${session.user.branchId == 1 and session.user.departmentId == 1}">
-            <button type="submit">ユーザー管理</button>
-        </form>
-
-        <div class="main-contents">
+        <div class="button">
             <!--  新規タスク -->
             <form th:action="@{/message}" th:method="get" th:object="${user}">
-                <button type="submit">新規投稿</button>
+                <button type="submit" class="submit-btn2">新規投稿</button>
             </form>
-
+            <form th:action="@{/management}" th:method="get" th:object="${user}"
+                  th:if="${session.user.branchId == 1 and session.user.departmentId == 1}">
+                <button type="submit" class="submit-btn2">ユーザー管理</button>
+            </form>
+            <form th:action="@{/logout}">
+                <button type="submit" class="submit-btn2">ログアウト</button>
+            </form>
+        </div><br/>
+        <div class="main-contents">
             <!-- 検索フォーム -->
             <form th:action="@{/home}" method="get">
                 <label>絞り込み <input type="date" name="startDate" th:value="${start}"/></label>
@@ -43,8 +42,8 @@
         <div class="message-icon" th:each="messageInfo : ${messages}">
             <div class="text">
                 <strong>投稿日時 :<span th:text="${#dates.format(messageInfo.createdDate, 'yyyy/MM/dd HH:mm:ss')}"/></strong><br/>
-                <strong>Id :</strong> <span th:text="${messageInfo.id}"/>
-                <strong>件名 :</strong> <span th:text="${messageInfo.title}"/>
+                <strong>Id :</strong> <span th:text="${messageInfo.id}"/><br/>
+                <strong>件名 :</strong> <span th:text="${messageInfo.title}"/><br/>
                 <strong>カテゴリ :</strong> <span th:text="${messageInfo.category}"/><br/>
 
                 <strong>投稿 :</strong><br/>
@@ -90,7 +89,7 @@
                     <!--            ここで、DBにuserId登録してるセッションにつながってるものを-->
                     <!-- セッションにuserがいるときだけuserIdを渡す -->
 
-                    <textarea th:field="*{text}" placeholder="コメントを書く"></textarea>
+                    <textarea th:field="*{text}" cols="100" rows="5" placeholder="コメントを書く"></textarea>
 
                     <!-- バリデーションエラー表示 -->
                     <div th:if="${errorMessageId == messageInfo.id} and ${#fields.hasErrors('text')}" style="color:red;"
@@ -113,22 +112,22 @@
                 </div>
             </div>
         </div>
-            <div class="pagination">
-               <ul>
-                   <li th:if="${messages.hasPrevious()}">
-                       <a th:href="@{/home(page=${messages.number - 1})}">前へ</a>
+            <nav aria-label="Page navigation example">
+               <ul class="pagination">
+                   <li class="page-item" th:if="${messages.hasPrevious()}">
+                       <a class="page-link" th:href="@{/home(page=${messages.number - 1})}">前へ</a>
                    </li>
 
-                   <li th:each="i : ${#numbers.sequence(0, messages.totalPages - 1)}"
+                   <li class="page-item" th:each="i : ${#numbers.sequence(0, messages.totalPages - 1)}"
                        th:classappend="${i} == ${messages.number} ? 'active'">
-                       <a th:href="@{/home(page=${i})}" th:text="${i + 1}">1</a>
+                       <a class="page-link" th:href="@{/home(page=${i})}" th:text="${i + 1}">1</a>
                    </li>
 
-                   <li th:if="${messages.hasNext()}">
-                       <a th:href="@{/home(page=${messages.number + 1})}">次へ</a>
+                   <li class="page-item" th:if="${messages.hasNext()}">
+                       <a class="page-link" th:href="@{/home(page=${messages.number + 1})}">次へ</a>
                    </li>
                </ul>
-            </div>
+            </nav>
 
     </body>
 </html>

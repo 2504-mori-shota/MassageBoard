@@ -67,10 +67,10 @@ public class MessageService {
     }
     private Page<MessageForm> setMessageForm(Page<Message> results) {
         List<MessageForm> messages = new ArrayList<>();
-        //int i = 0; i < results.size(); i++
+        //getContent()->ページコンテンツをListで返却する
         for (Message result : results.getContent()) {
             MessageForm message = new MessageForm();
-           // Message result = results.get(i);
+
             message.setId(result.getId());
             message.setTitle(result.getTitle());
             message.setText(result.getText());
@@ -80,9 +80,10 @@ public class MessageService {
             message.setUpdatedDate(result.getUpdatedDate());
             messages.add(message);
         }
-//        int start = (int) pageable.getOffset();
-//        int end = Math.min((start + pageable.getPageSize()), messages.size());
-//        List<MessageForm> pageContent = messages.subList(start, end);
+        //getTotalPages()->総ページ数を返却する
+        //getTotalElements()->全要素数を返す
+        //getNumber()->現在何ページ目にいるかを返す
+        //getSize()->いくつの要素をページで持つか
         return new PageImpl<>(messages, results.getPageable(), results.getTotalElements());
     }
 
