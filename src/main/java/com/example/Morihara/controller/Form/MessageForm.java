@@ -49,5 +49,5 @@ public class MessageForm {
 
     private  int count;
 
-
+    private  String timeAgo;
 }

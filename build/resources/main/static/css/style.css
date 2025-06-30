@@ -363,6 +363,10 @@ li{
   list-style: none;
 }
 
+.timeAgo {
+    color: rgba( 90, 90, 90, 0.5);
+}
+
 /*ログイン画面css*/
 .main-contents-login {
     border-radius: 30px;
@@ -410,7 +414,7 @@ li{
         			border-radius: 15px;
         			display: block;
         			margin: 15px auto;
-        			padding: 15px 45px;
+        			padding: 15px 30px;
         			width: 15%;
         			font-size: 13px;
         			font-weight: bold;

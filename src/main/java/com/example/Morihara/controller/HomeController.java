@@ -62,6 +62,8 @@ public class HomeController {
         session = request.getSession();
         //Page型はWebサイトなどで、大量の情報をページに分割して表示する方式
         Page<MessageForm> messageList = messageService.findByMessages(startDate, endDate, category, pageable);
+
+
         // 変数名を統一
         for (MessageForm message : messageList) {
 
@@ -82,7 +84,9 @@ public class HomeController {
 
             message.setReads(reads);
             message.setComments(comments);
+            String str = message.getTimeAgo();
 
+            
             if(reads.isEmpty()) {
                 message.setReads(null);
             }
@@ -105,6 +109,7 @@ public class HomeController {
 
 
     }
+
 
     @RequestMapping("/logout")
     public String logout(HttpServletRequest request) {

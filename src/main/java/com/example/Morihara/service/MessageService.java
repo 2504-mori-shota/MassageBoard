@@ -1,10 +1,8 @@
 package com.example.Morihara.service;
 
 import com.example.Morihara.controller.Form.MessageForm;
-import com.example.Morihara.controller.Form.UserForm;
 import com.example.Morihara.repository.MessageRepository;
 import com.example.Morihara.repository.entity.Message;
-import com.example.Morihara.repository.entity.User;
 import io.micrometer.common.util.StringUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +13,12 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -78,6 +82,7 @@ public class MessageService {
             message.setUserId(result.getUserId());
             message.setCreatedDate(result.getCreatedDate());
             message.setUpdatedDate(result.getUpdatedDate());
+            message.setTimeAgo(timeAgo(result.getCreatedDate()));
             messages.add(message);
         }
         //getTotalPages()->総ページ数を返却する
@@ -85,6 +90,36 @@ public class MessageService {
         //getNumber()->現在何ページ目にいるかを返す
         //getSize()->いくつの要素をページで持つか
         return new PageImpl<>(messages, results.getPageable(), results.getTotalElements());
+    }
+
+    private  static String timeAgo(Date postTime) {
+        LocalDateTime now = LocalDateTime.now();
+        Temporal temporal = LocalDateTime.ofInstant(postTime.toInstant(), ZoneId.systemDefault());
+        Duration duration = Duration.between(temporal, now);
+
+        long seconds = duration.getSeconds();
+        long minutes = seconds / 60;
+        long hours = minutes / 60;
+        long days = hours / 24;
+        long weeks = days / 7;
+        long months = days / 30; // 大雑把な計算
+        long years = days / 365; // 大雑把な計算
+
+        if (years >= 1) {
+            return years + "年前";
+        } else if (months >= 1) {
+            return months + "ヶ月前";
+        } else if (weeks >= 1) {
+            return weeks + "週間前";
+        } else if (days >= 1) {
+            return days + "日前";
+        } else if (hours >= 1) {
+            return hours + "時間前";
+        } else if (minutes >= 1) {
+            return minutes + "分前";
+        } else {
+            return "たった今";
+        }
     }
 
 
