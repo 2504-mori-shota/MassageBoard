@@ -88,6 +88,10 @@ public class HomeController {
             }
         }
 
+        if(messageList.getContent().isEmpty()){
+            model.addAttribute("errorMessageForm", "不正なパラメーターにより表示できる投稿が存在しません");
+        }
+
 
         mav.setViewName("/home");
         mav.addObject("messages", messageList);
