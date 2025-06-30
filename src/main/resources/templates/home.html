@@ -112,7 +112,7 @@
                 </div>
             </div>
         </div>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+            <nav aria-label="Page navigation example">
                <ul class="pagination">
                    <li class="page-item" th:if="${messages.hasPrevious()}">
                        <a class="page-link" th:href="@{/home(page=${messages.number - 1})}">前へ</a>
@@ -127,7 +127,7 @@
                        <a class="page-link" th:href="@{/home(page=${messages.number + 1})}">次へ</a>
                    </li>
                </ul>
-        </div>
+            </nav>
 
     </body>
 </html>

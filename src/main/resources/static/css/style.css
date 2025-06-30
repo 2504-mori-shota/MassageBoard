@@ -349,6 +349,19 @@ body {
 
 }
 
+nav{
+  width: 500px;
+  margin: auto;
+  background-color: #ddd;
+}
+ul{
+  text-align: center;
+  font-size: 30px
+}
+li{
+  display: inline-block;
+  list-style: none;
+}
 
 /*ログイン画面css*/
 .main-contents-login {
