@@ -242,7 +242,33 @@ body {
     }
 }
 
+.button-signup {
+    display: flex; /*ボタン横並び*/
+    justify-content: left;
+    position: relative; /* 今の位置を基準 */
+   /* right: 400px;/* 右から400px */
+    .submit-btn2 {
+            			/*width: 100%;*/
+            			border-radius: 15px;
+                        min-width: 200px;
+                        max-width: 600px;
+                        padding: 10px;
+                        box-sizing: border-box;
+                        border: 1px solid #68779a;
+                        background: #FFFFCC;
+            			font-weight: bold;
+            			cursor: pointer;
+            			opacity: 1;
+            			visibility: visible;
+            			-webkit-transition: all .3s ease;
 
+            			&:hover {
+            				transition: all .3s ease;
+            				background-color: rgba(0,0,0,0.8);
+            			}
+            		}
+
+}
 
 
 .edit-button input[type="button"] {
@@ -323,6 +349,19 @@ body {
 
 }
 
+nav{
+  width: 500px;
+  margin: auto;
+  background-color: #ddd;
+}
+ul{
+  text-align: center;
+  font-size: 30px
+}
+li{
+  display: inline-block;
+  list-style: none;
+}
 
 /*ログイン画面css*/
 .main-contents-login {
